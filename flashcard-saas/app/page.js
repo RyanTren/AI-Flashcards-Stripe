@@ -93,7 +93,7 @@ export default function Home() {
         <Typography variant="h4" gutterBottom>Pricing</Typography>
 
         <Grid container spacing = {4}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Box
               sx={{
                 p: 3,
@@ -106,7 +106,7 @@ export default function Home() {
               <Typography variant="h6" gutterBottom>5$ / month</Typography>  
               <Typography> 
                 {' '}
-                Access to basic features and limited storage.
+                Access to basic features, text customization, limited storage, and threads.
               </Typography>
               <Button variant="contained" color = "primary" sx={{mt: 2,}}>
                 Choose Basic
@@ -116,7 +116,7 @@ export default function Home() {
         
 
         
-          <Grid item xs={12} md={4}>  
+          <Grid item xs={12} md={6}>  
             <Box
               sx={{
                 p: 3,
@@ -129,34 +129,11 @@ export default function Home() {
               <Typography variant="h6" gutterBottom>15$ / month</Typography>  
               <Typography> 
                 {' '}
-                Unlock advanced AI features, increased storage, customizable flashcards, 
-                and priority support to enhance your learning experience.
+                Unlock advanced AI features, increased storage, 
+                and AI support to enhance your learning experience.
               </Typography>
               <Button variant="contained" color = "primary" sx={{mt: 2,}}>
                 Choose Pro
-              </Button>
-            </Box>
-          </Grid>
-           
-
-          <Grid item xs={12} md={4}>        
-            <Box
-              sx={{
-                p: 3,
-                border: '1px solid',
-                borderColor: 'grey.300',
-                borderRadius: 2,
-              }}
-            >
-              <Typography variant="h5" gutterBottom>Elite</Typography>  
-              <Typography variant="h6" gutterBottom>35$ / month</Typography>  
-              <Typography> 
-                {' '}
-                Enjoy unlimited storage, AI-generated insights, collaborative tools, personalized coaching, 
-                and VIP support for the ultimate learning experience.
-              </Typography>
-              <Button variant="contained" color = "primary" sx={{mt: 2,}}>
-                Choose Elite
               </Button>
             </Box>
           </Grid>
