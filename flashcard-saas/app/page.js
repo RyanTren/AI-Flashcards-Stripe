@@ -89,11 +89,11 @@ export default function Home() {
           textAlign: "center",
         }}
       >
-        
+
         <Typography variant="h4" gutterBottom>Pricing</Typography>
 
         <Grid container spacing = {4}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Box
               sx={{
                 p: 3,
@@ -113,10 +113,10 @@ export default function Home() {
               </Button>
             </Box>
           </Grid>
-        </Grid>
+        
 
-        <Grid container spacing = {4}>
-          <Grid item xs={12} md={6}>  
+        
+          <Grid item xs={12} md={4}>  
             <Box
               sx={{
                 p: 3,
@@ -137,10 +137,9 @@ export default function Home() {
               </Button>
             </Box>
           </Grid>
-        </Grid>      
+           
 
-        <Grid container spacing = {4}>
-          <Grid item xs={12} md={6}>        
+          <Grid item xs={12} md={4}>        
             <Box
               sx={{
                 p: 3,
@@ -161,6 +160,7 @@ export default function Home() {
               </Button>
             </Box>
           </Grid>
+
         </Grid>
 
       </Box>
