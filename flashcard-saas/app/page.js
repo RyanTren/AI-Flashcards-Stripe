@@ -8,13 +8,13 @@ export default function Home() {
   return (
     <Container>
       <Head>
-        <title>Flashcard Saas</title>
+        <title>Flasher.io</title>
         <meta name = "description" content = "Create Flashcard from your text" />
       </Head>
 
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}}>Flashcard Saas</Typography>
+          <Typography variant="h6" style={{flexGrow: 1}}>Flasher.io</Typography>
           <SignedOut>
             <Button color="inherit"> Login</Button>
             <Button color="inherit"> Sign Up</Button>
@@ -31,9 +31,8 @@ export default function Home() {
           my: 4,
         }}
       >
-        <Typography variant="h2">Welcome to Flasher.io</Typography>
-
-        <Typography variant="h5">
+        <Typography variant="h2" gutterBottom>Welcome to Flasher.io</Typography>
+        <Typography variant="h5" gutterBottom>
           {' '}
           The easiest way to make flash cards from your custom input
         </Typography>
@@ -41,7 +40,6 @@ export default function Home() {
         <Button variant="contained" color = "primary" sx = {{mt: 2}}>
           Get Started
         </Button>
-
       </Box>
 
       <Box
@@ -49,15 +47,10 @@ export default function Home() {
           my: 6,
         }}
       >
-        <Typography variant="h4" align="center" gutterBottom components="2">
-          Features
-        </Typography>
-
+        <Typography variant="h4" gutterBottom>Features</Typography>
         <Grid container spacing = {4}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6">
-              Easy Text Input
-            </Typography>  
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>Easy Text Input</Typography>  
             <Typography> 
               {' '}
               Simply input your text and our software will do the rest. Create flashcards faster than ever
@@ -66,10 +59,8 @@ export default function Home() {
         </Grid>
 
         <Grid contained spacing = {4}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6">
-              Smart Flashcards
-            </Typography>  
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>Smart Flashcards</Typography>  
             <Typography>
               {' '} 
               Our AI breaks down your text into flashcards, making it easier to study
@@ -78,10 +69,8 @@ export default function Home() {
         </Grid>
 
         <Grid contained spacing = {4}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6">
-              Accessible Anywhere
-            </Typography>  
+          <Grid item xs={12} md={4}>
+            <Typography variant="h6" gutterBottom>Accessible Anywhere</Typography>  
             <Typography>
               {' '}
               Access your flashcards from anywhere in the world, no need to carry around physical cards
@@ -90,17 +79,21 @@ export default function Home() {
         </Grid>
       </Box>
 
+
+
+
+
       <Box
         sx={{
           my: 6,
+          textAlign: "center",
         }}
       >
-        <Typography variant="h4" align="center" gutterBottom components="2">
-          Pricing
-        </Typography>
+        
+        <Typography variant="h4" gutterBottom>Pricing</Typography>
 
         <Grid container spacing = {4}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} md={6}>
             <Box
               sx={{
                 p: 3,
@@ -109,21 +102,21 @@ export default function Home() {
                 borderRadius: 2,
               }}
             >
-              <Typography variant="h5">
-                Basic
-              </Typography>  
-              <Typography variant="h6">
-                5$ / month
-              </Typography>  
+              <Typography variant="h5" gutterBottom>Basic</Typography>  
+              <Typography variant="h6" gutterBottom>5$ / month</Typography>  
               <Typography> 
                 {' '}
                 Access to basic features and limited storage.
               </Typography>
-              <Button variant="contained" color = "primary">
+              <Button variant="contained" color = "primary" sx={{mt: 2,}}>
                 Choose Basic
               </Button>
             </Box>
+          </Grid>
+        </Grid>
 
+        <Grid container spacing = {4}>
+          <Grid item xs={12} md={6}>  
             <Box
               sx={{
                 p: 3,
@@ -132,22 +125,22 @@ export default function Home() {
                 borderRadius: 2,
               }}
             >
-              <Typography variant="h5">
-                Pro
-              </Typography>  
-              <Typography variant="h6">
-                15$ / month
-              </Typography>  
+              <Typography variant="h5" gutterBottom>Pro</Typography>  
+              <Typography variant="h6" gutterBottom>15$ / month</Typography>  
               <Typography> 
                 {' '}
                 Unlock advanced AI features, increased storage, customizable flashcards, 
                 and priority support to enhance your learning experience.
               </Typography>
-              <Button variant="contained" color = "primary">
+              <Button variant="contained" color = "primary" sx={{mt: 2,}}>
                 Choose Pro
               </Button>
             </Box>
+          </Grid>
+        </Grid>      
 
+        <Grid container spacing = {4}>
+          <Grid item xs={12} md={6}>        
             <Box
               sx={{
                 p: 3,
@@ -156,18 +149,14 @@ export default function Home() {
                 borderRadius: 2,
               }}
             >
-              <Typography variant="h5">
-                Elite
-              </Typography>  
-              <Typography variant="h6">
-                35$ / month
-              </Typography>  
+              <Typography variant="h5" gutterBottom>Elite</Typography>  
+              <Typography variant="h6" gutterBottom>35$ / month</Typography>  
               <Typography> 
                 {' '}
                 Enjoy unlimited storage, AI-generated insights, collaborative tools, personalized coaching, 
                 and VIP support for the ultimate learning experience.
               </Typography>
-              <Button variant="contained" color = "primary">
+              <Button variant="contained" color = "primary" sx={{mt: 2,}}>
                 Choose Elite
               </Button>
             </Box>
