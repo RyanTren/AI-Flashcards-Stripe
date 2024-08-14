@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
 import { Container, Typography, CircularProgress, Box } from "@mui/material"
-import { Circ } from "gsap"
+// import { Circ } from "gsap"
 
 
 const ResultPage = () => {
