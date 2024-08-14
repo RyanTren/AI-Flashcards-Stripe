@@ -39,7 +39,7 @@ export async function POST(req){
                 content: data
             }
         ],
-        model: "gpt-4o",
+        model: "gpt-4o-mini",
         response_format: {type: "json_object"}
     })
 
