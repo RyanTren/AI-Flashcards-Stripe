@@ -18,7 +18,8 @@ import {
 	DialogActions,
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
-import { doc, writeBatch } from 'firebase/firestore'
+import { db } from '@/firebase'
+import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 
 export default function Generate() {
   // const [isLoading, isSignedIn, user] = useUser()
@@ -84,8 +85,8 @@ export default function Generate() {
 			
 			const colref = collection(userDocRef, name)
 			flashcards.forEach((flashcards) => {
-				const cardDocREF = doc(ref)
-				batch.set(cardDocREF, flashcard)
+				const cardDocRef = doc(ref)
+				batch.set(cardDocRef, flashcard)
 			})
 	
 			await batch.commit()
@@ -173,10 +174,11 @@ export default function Generate() {
 							))}
 						</Grid>
 						<Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
-							<Button variant='container' color='secondary' onClick={handleOpen}>Save</Button>
+							<Button variant='container' color='primary' onClick={handleOpen}>Save</Button>
 						</Box>
 					</Box>
 				)}
+
 				<Dialog open={open} onClose={handleClose}>
 					<DialogTitle>Save Flashcard Set</DialogTitle>
 					<DialogContent>
