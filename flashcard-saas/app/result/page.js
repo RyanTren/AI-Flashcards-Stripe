@@ -9,7 +9,7 @@ import { Circ } from "gsap"
 
 
 const ResultPage = () => {
-    const router = useRoute()
+    const router = useRouter()
     const searchParams = useSearchParams()
     const session_id = searchParams.get("session_id")
 
@@ -59,7 +59,7 @@ const ResultPage = () => {
             </Container>
         )
     }
-
+    
     return(
         <Container maxWidth="100vw" sx={{textAlign: 'center', mt: 4}}>
 
@@ -80,3 +80,4 @@ const ResultPage = () => {
         </Container>
     )
 }
+export default ResultPage
