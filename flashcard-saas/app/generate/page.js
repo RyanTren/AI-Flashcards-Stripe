@@ -11,6 +11,11 @@ import {
 	Card,
 	CardActionArea,
 	CardContent,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogContentText,
+	DialogActions,
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
 import { doc, writeBatch } from 'firebase/firestore'
@@ -31,7 +36,7 @@ export default function Generate() {
         body: text,
         })
         .then((res) => res.json())
-        .then(data > setFlashcards(data))
+        .then((data) => setFlashcards(data))
     }
 
 		const handleCardClick = (id) => {
@@ -166,8 +171,33 @@ export default function Generate() {
 								</Grid>
 							))}
 						</Grid>
+						<Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
+							<Button variant='container' color='secondary' onClick={handleOpen}>Save</Button>
+						</Box>
 					</Box>
 				)}
+				<Dialog open={open} onClose={handleClose}>
+					<DialogTitle>Save Flashcards</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Please enter a name for your flashcard collection
+						</DialogContentText>
+						<TextField
+						autoFocus
+						margin = 'dense'
+						label = 'Collection Name'
+						type = 'text'
+						fullWidth
+						value={name}
+						onChange={(e) => setName(e.target.value)}
+						variant='outlined'
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleClose}>Cancel</Button>
+						<Button onClick={saveFlashcards}>Save</Button>
+					</DialogActions>
+				</Dialog>
 			</Container>
 		)
 }

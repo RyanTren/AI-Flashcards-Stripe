@@ -28,7 +28,7 @@ export async function POST(req){
     const openai = new OpenAI();
     const data = await req.text();
 
-    const completion = await openai.completion.create({
+    const completion = await openai.completions.create({
         messages: [
             {
                 role: "system",
