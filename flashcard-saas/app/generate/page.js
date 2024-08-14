@@ -112,7 +112,6 @@ export default function Generate() {
 			await batch.commit()
 			handleClose()
 			router.push('/flashcards')
-			// router.push(`/flashcard?id=${id}`)
 		}
 
 		
