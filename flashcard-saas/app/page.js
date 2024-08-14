@@ -6,8 +6,8 @@ import Head from "next/head";
 
 export default function Home() {
   return (
-    <Container>
-      <Head>
+    <Container maxWidth="100vw">
+      <Head maxWidth="100vw">
         <title>Flasher.io</title>
         <meta name = "description" content = "Create Flashcard from your text" />
       </Head>
