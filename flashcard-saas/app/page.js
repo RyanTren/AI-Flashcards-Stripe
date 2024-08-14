@@ -48,6 +48,7 @@ export default function Home() {
         }}
       >
         <Typography variant="h4" gutterBottom>Features</Typography>
+
         <Grid container spacing = {4}>
           <Grid item xs={12} md={4}>
             <Typography variant="h6" gutterBottom>Easy Text Input</Typography>  
@@ -56,9 +57,9 @@ export default function Home() {
               Simply input your text and our software will do the rest. Create flashcards faster than ever
             </Typography>
           </Grid>
-        </Grid>
+        
 
-        <Grid contained spacing = {4}>
+        
           <Grid item xs={12} md={4}>
             <Typography variant="h6" gutterBottom>Smart Flashcards</Typography>  
             <Typography>
@@ -66,9 +67,8 @@ export default function Home() {
               Our AI breaks down your text into flashcards, making it easier to study
             </Typography>
           </Grid>
-        </Grid>
-
-        <Grid contained spacing = {4}>
+        
+        
           <Grid item xs={12} md={4}>
             <Typography variant="h6" gutterBottom>Accessible Anywhere</Typography>  
             <Typography>
@@ -78,10 +78,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </Box>
-
-
-
-
+    
 
       <Box
         sx={{
