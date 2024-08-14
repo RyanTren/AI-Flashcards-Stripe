@@ -14,12 +14,9 @@ Only generate 10 flashcards at a time.
 Remember to follow the best practices for flashcard creation and ensure that the content 
 is accurate and well-structured.
 
-Retirm om the following JSON format
+Return om the following JSON format
 {
-    "flashcards": [{
-        "front" : str
-        "back" : str
-    }]
+    flashcards: [{front : str, back : str}]
 }
 `;
 
@@ -28,22 +25,18 @@ export async function POST(req){
     const openai = new OpenAI();
     const data = await req.text();
 
-    const completion = await openai.completions.create({
+    const completion = await openai.chat.completions.create({
         messages: [
-            {
-                role: "system",
-                content: systemPrompt
-            },
-            {
-                role: "user",
-                content: data
-            }
+            {role: "system", content: systemPrompt},
+            {role: "user", content: data},
         ],
         model: "gpt-4o-mini",
-        response_format: {type: "json_object"}
+        response_format: {type: "json_object"},
     })
 
-    const flashcards = JSON.parse(completion.data.choices[0].message.content).flashcards;
+    console.log(completion.data.choice[0].message.content);
+
+    const flashcards = JSON.parse(completion.data.choice[0].message.content);
 
     return NextResponse.json(flashcards.flashcard);
 }
