@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { use, useState } from 'react'
 import {
   Container,
@@ -22,13 +23,22 @@ import { db } from '@/firebase'
 import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 
 export default function Generate() {
-  // const [isLoading, isSignedIn, user] = useUser()
+  const {isLoading, isSignedIn, user} = useUser()
   const [flashcards, setFlashcards] = useState([])
   const [flipped, setFlipped] = useState([])
   const [text, setText] = useState('')
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
-  // const router = useRouter()
+  const router = useRouter();
+
+   // Handle cases where user is not signed in or still loading
+	if (isLoading) {
+    return <Typography variant="h5">Loading...</Typography>;
+  }
+
+  if (!isSignedIn) {
+    return <Typography variant="h5">You must be signed in to generate flashcards.</Typography>;
+  }
 
   const handleSubmit = async () => {
     // We'll implement the API call here
@@ -46,7 +56,6 @@ export default function Generate() {
 			setFlipped((prev) => ({
 				...prev,
 				[id]: !prev[id],
-				
 			}))
 		}
 
@@ -59,13 +68,24 @@ export default function Generate() {
 		}
 
 		const saveFlashcards = async () => {
+			if (!isSignedIn || isLoading) {
+				alert("User is not logged in");
+				console.error("User is not signed in or still loading");
+				return;
+			}
+
 			if (!name){
 				alert('Please enter a name')
 				return
 			}
 
+			if (!user?.id) {
+				console.error("User ID is not available");
+				return;
+			}
+
 			const batch = writeBatch(db)
-			const userDocRef = doc(collection(db, 'users'), user.id)
+			const userDocRef = doc(collection(db, 'users'), user?.id)
 			const docSnap = await getDoc(userDocRef)
 
 			if(docSnap.exists()){
@@ -85,13 +105,14 @@ export default function Generate() {
 			
 			const colref = collection(userDocRef, name)
 			flashcards.forEach((flashcards) => {
-				const cardDocRef = doc(ref)
-				batch.set(cardDocRef, flashcard)
+				const cardDocRef = doc(colref)
+				batch.set(cardDocRef, flashcards)
 			})
 	
 			await batch.commit()
 			handleClose()
 			router.push('/flashcards')
+			// router.push(`/flashcard?id=${id}`)
 		}
 
 		
