@@ -5,10 +5,10 @@ const systemPrompt = `
 Your task is to generate flashcards based on given prompts. 
 Each flashcard should have a question and an answer. 
 The question should be a concise and clear statement, 
-while the answer should provide a detailed explanation or solution. 
+while the answer should provide a detailed explanation up to 15 words or solution. 
 Use your expertise to create high-quality flashcards that are informative and helpful for learning.
 
-Only generate 10 flashcards at a time.
+Only generate 9 flashcards at a time.
 
 Remember to follow the best practices for flashcard creation and ensure that the content 
 is accurate and well-structured.
@@ -50,7 +50,7 @@ export async function POST(req){
 
     if (completion && completion.choices && completion.choices.length > 0) {
         const messageContent = completion.choices[0].message.content;
-        console.log(messageContent);
+        // console.log(messageContent);
         const flashcards = JSON.parse(messageContent);
         return NextResponse.json(flashcards.flashcards);
     } else {

@@ -37,7 +37,7 @@ export default function Home() {
           The easiest way to make flash cards from your custom input
         </Typography>
 
-        <Button variant="contained" color = "primary" sx = {{mt: 2}}>
+        <Button variant="contained" color = "primary" sx = {{mt: 2}} href="/generate">
           Get Started
         </Button>
       </Box>
