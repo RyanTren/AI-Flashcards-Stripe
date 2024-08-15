@@ -88,7 +88,8 @@ export default function Home() {
         <Button 
         variant="contained" 
         color = "primary" 
-        sx = {{mt: 2, 
+        sx = {{
+          mt: 2, 
           backgroundColor: theme.palette.secondary.contrastText, 
           color: theme.palette.primary.main, 
           '&:hover': {
@@ -211,6 +212,7 @@ export default function Home() {
               <Button 
               variant="contained" 
               color = "primary" 
+              href="/generate"
               sx={{
                 mt: 2,
                 backgroundColor: theme.palette.secondary.contrastText, 

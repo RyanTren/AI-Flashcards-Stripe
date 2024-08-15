@@ -90,6 +90,20 @@ const ResultPage = () => {
                             <Typography variant="body1">
                                 We have recieved your payment and you can now access the premium features of Flasher.io!
                             </Typography>
+                            <Button 
+                                my={4} 
+                                href="/" 
+                                sx={{
+                                mt: 10,
+                                backgroundColor: theme.palette.secondary.contrastText, 
+                                color: theme.palette.primary.main, 
+                                '&:hover': {
+                                backgroundColor: theme.palette.secondary.contrastText,
+                                color: theme.palette.primary.main,
+                                },
+                                }}>
+                                    Back to Home Page
+                            </Button>
                         </Box>
                     </>    
                 ) : 
@@ -99,15 +113,20 @@ const ResultPage = () => {
                             <Typography variant="body1">
                                 We were unable to process your payment. Please try again later.
                             </Typography>
-                            <Button my={4} href="/" sx={{
-                mt: 10,
-                backgroundColor: theme.palette.secondary.contrastText, 
-                color: theme.palette.primary.main, 
-                '&:hover': {
-                backgroundColor: theme.palette.secondary.contrastText,
-                color: theme.palette.primary.main,
-                },
-              }}>Back to Home Page</Button>
+                            <Button 
+                                my={4} 
+                                href="/" 
+                                sx={{
+                                mt: 10,
+                                backgroundColor: theme.palette.secondary.contrastText, 
+                                color: theme.palette.primary.main, 
+                                '&:hover': {
+                                backgroundColor: theme.palette.secondary.contrastText,
+                                color: theme.palette.primary.main,
+                                },
+                                }}>
+                                    Back to Home Page
+                            </Button>
                         </Box>
                     </>    
                 

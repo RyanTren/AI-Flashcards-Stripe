@@ -138,6 +138,38 @@ export default function Generate() {
 
 		return (
 			<Container maxWidth="md">
+				 <Button href="/" 
+					sx={{
+						mt: 2, 
+						position: "flex",
+						alignContent: "center",
+						alignItems: "center",
+						textAlign: "center",
+						backgroundColor: theme.palette.secondary.contrastText, 
+						color: theme.palette.primary.main, 
+						'&:hover': {
+						backgroundColor: theme.palette.secondary.contrastText,
+						color: theme.palette.primary.main,
+						},
+					}}>
+					Back Page
+				</Button>
+				<Button href="/flashcards" 
+					sx={{
+						mt: 2, 
+						position: "flex",
+						alignContent: "center",
+						alignItems: "center",
+						textAlign: "center",
+						backgroundColor: theme.palette.secondary.contrastText, 
+						color: theme.palette.primary.main, 
+						'&:hover': {
+						backgroundColor: theme.palette.secondary.contrastText,
+						color: theme.palette.primary.main,
+						},
+					}}>
+					View Flashcard Sets
+				</Button>
 				<Box sx={{ my: 4 }}>
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards

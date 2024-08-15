@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { CollectionReference, doc, getDoc, setDoc } from "firebase/firestore"
 import { db } from "@/firebase"
 import { useRouter } from "next/navigation"
-import { Container, Grid, Card, CardActionArea, CardContent, Typography } from "@mui/material"
+import { Container, Grid, Card, CardActionArea, CardContent, Typography, Button } from "@mui/material"
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -75,6 +75,22 @@ export default function Flashcards() {
                 </Grid>
             ))}
             </Grid>
+            <Button href="/" 
+            sx={{
+                mt: 2, 
+                position: "flex",
+                alignContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                backgroundColor: theme.palette.secondary.contrastText, 
+                color: theme.palette.primary.main, 
+                '&:hover': {
+                backgroundColor: theme.palette.secondary.contrastText,
+                color: theme.palette.primary.main,
+                },
+            }}>
+            Back Page
+            </Button>
         </Container>
     )
 }
