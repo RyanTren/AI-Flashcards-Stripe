@@ -4,8 +4,26 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import getStripe from "@/utils/get-stripe"
 import { useSearchParams } from "next/navigation"
-import { Container, Typography, CircularProgress, Box } from "@mui/material"
+import { Container, Typography, CircularProgress, Box, Button } from "@mui/material"
 // import { Circ } from "gsap"
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#676fgd',
+      main: '#424769',
+      dark: '#2d3250',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#AD81A7',
+      main: '#6C5E82',
+      dark: '#2E365A',
+      contrastText: '#F8C19B',
+    },
+  },
+});
 
 
 const ResultPage = () => {
@@ -76,11 +94,20 @@ const ResultPage = () => {
                     </>    
                 ) : 
                     <>
-                        <Typography variant="h6" sx={{mt: 2}}>Payment Failed.</Typography>
-                        <Box sx={{mt: 22}}>
+                        <Typography variant="h3" sx={{mt: 50}}>Payment Failed.</Typography>
+                        <Box sx={{mt: 10}}>
                             <Typography variant="body1">
                                 We were unable to process your payment. Please try again later.
                             </Typography>
+                            <Button my={4} href="/" sx={{
+                mt: 10,
+                backgroundColor: theme.palette.secondary.contrastText, 
+                color: theme.palette.primary.main, 
+                '&:hover': {
+                backgroundColor: theme.palette.secondary.contrastText,
+                color: theme.palette.primary.main,
+                },
+              }}>Back to Home Page</Button>
                         </Box>
                     </>    
                 

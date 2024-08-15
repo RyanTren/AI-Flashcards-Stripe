@@ -139,7 +139,7 @@ export default function Generate() {
 		return (
 			<Container maxWidth="md">
 				<Box sx={{ my: 4 }}>
-					<Typography variant="h4" component="h1" gutterBottom sx={{color: theme.palette.primary.contrastText}}>
+					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards
 					</Typography>
 					<TextField
@@ -148,9 +148,9 @@ export default function Generate() {
 						label="Enter text"
 						fullWidth
 						multiline
-						rows={4}
+						rows={6}
 						variant="outlined"
-						sx={{ mb: 2, }}
+						sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}
 						
 					/>
 					<Button
