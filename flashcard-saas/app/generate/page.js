@@ -21,6 +21,24 @@ import {
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
 import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#676fgd',
+      main: '#424769',
+      dark: '#2d3250',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#AD81A7',
+      main: '#6C5E82',
+      dark: '#2E365A',
+      contrastText: '#F8C19B',
+    },
+  },
+});
 
 export default function Generate() {
   const {isLoading, isSignedIn, user} = useUser()
@@ -33,11 +51,13 @@ export default function Generate() {
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
-    return <Typography variant="h5">Loading...</Typography>;
+    return <Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">Loading...</Typography>;
   }
 
   if (!isSignedIn) {
-    return <Typography variant="h5">You must be signed in to generate flashcards.</Typography>;
+    return(
+		<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">You must be signed in to generate flashcards.</Typography>
+	);
   }
 
   const handleSubmit = async () => {
@@ -119,7 +139,7 @@ export default function Generate() {
 		return (
 			<Container maxWidth="md">
 				<Box sx={{ my: 4 }}>
-					<Typography variant="h4" component="h1" gutterBottom>
+					<Typography variant="h4" component="h1" gutterBottom sx={{color: theme.palette.primary.contrastText}}>
 						Generate Flashcards
 					</Typography>
 					<TextField
@@ -130,11 +150,20 @@ export default function Generate() {
 						multiline
 						rows={4}
 						variant="outlined"
-						sx={{ mb: 2 }}
+						sx={{ mb: 2, }}
+						
 					/>
 					<Button
 						variant="contained"
 						color="primary"
+						sx={{
+							backgroundColor: theme.palette.secondary.contrastText, 
+							color: theme.palette.primary.main, 
+							'&:hover': {
+							backgroundColor: theme.palette.secondary.contrastText,
+							color: theme.palette.primary.main,
+							},
+						}}
 						onClick={handleSubmit}
 						fullWidth
 					>
