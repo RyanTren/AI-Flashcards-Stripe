@@ -111,8 +111,83 @@ export default function Home() {
       >
         <Typography variant="h4" gutterBottom>Features</Typography>
 
+        <Grid container spacing = {4}>
+          <Grid item xs={12} md={6}>  
+            <Box
+              sx={{
+                p: 3,
+                border: '1px solid',
+                borderColor: theme.palette.primary.light,
+                backgroundColor: theme.palette.primary.light,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="h5" gutterBottom>Custom Prompt Creation</Typography>  
+              <Typography> 
+                {' '}
+                Create personalized flashcards by inputting your own prompts. Our AI adapts to your specific needs, generating content that perfectly aligns with your study goals.
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} md={6}>  
+            <Box
+              sx={{
+                p: 3,
+                border: '1px solid',
+                borderColor: theme.palette.primary.light,
+                backgroundColor: theme.palette.primary.light,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="h5" gutterBottom>AI-Powered Flashcard Creation</Typography>  
+              <Typography> 
+                {' '}
+                Generate personalized flashcards from your study materials using cutting-edge AI. Upload your notes, and our AI will create questions and answers that help you retain key concepts efficiently.
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} md={6}>  
+            <Box
+              sx={{
+                p: 3,
+                border: '1px solid',
+                borderColor: theme.palette.primary.light,
+                backgroundColor: theme.palette.primary.light,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="h5" gutterBottom>Interactive Learning Experience</Typography>  
+              <Typography> 
+                {' '}
+                Engage with your flashcards in a dynamic, interactive environment. Test yourself with various quiz modes, track your progress, and stay motivated with real-time feedback and performance insights.
+              </Typography>
+            </Box>
+          </Grid>
+
+          <Grid item xs={12} md={6}>  
+            <Box
+              sx={{
+                p: 3,
+                border: '1px solid',
+                borderColor: theme.palette.primary.light,
+                backgroundColor: theme.palette.primary.light,
+                borderRadius: 2,
+              }}
+            >
+              <Typography variant="h5" gutterBottom>Seamless Integration with Firebase</Typography>  
+              <Typography> 
+                {' '}
+                Your data is securely stored and easily accessible across all devices, thanks to Firebase's robust cloud infrastructure. Sync your flashcards and study sessions effortlessly, anytime, anywhere.
+              </Typography>
+            </Box>
+          </Grid>
+
+        </Grid>
+
         <Grid container spacing = {0} gap = {5}>
-        <Box
+        {/* <Box
               sx={{
                 p: 4,
                 border: '1px solid',
@@ -155,10 +230,10 @@ export default function Home() {
               Our AI breaks down your text into flashcards, making it easier to study
             </Typography>
           </Grid>
-        </Box>
+        </Box> */}
         
         
-        <Box
+        {/* <Box
               sx={{
                 p: 4,
                 border: '1px solid',
@@ -178,7 +253,7 @@ export default function Home() {
               Access your flashcards from anywhere in the world, no need to carry around physical cards
             </Typography>
           </Grid>
-        </Box>
+        </Box> */}
         </Grid>
       </Box>
     
