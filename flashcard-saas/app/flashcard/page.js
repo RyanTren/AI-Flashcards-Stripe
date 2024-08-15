@@ -8,6 +8,24 @@ import { db } from "@/firebase"
 import { useSearchParams } from "next/navigation"
 
 import { Container, Grid, Box, Typography, Card, CardActionArea, CardContent } from "@mui/material"
+import { createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#676fgd',
+      main: '#424769',
+      dark: '#2d3250',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      light: '#AD81A7',
+      main: '#6C5E82',
+      dark: '#2E365A',
+      contrastText: '#F8C19B',
+    },
+  },
+});
 
 
 export default function Flashcard() {
@@ -49,11 +67,11 @@ export default function Flashcard() {
 
     return(
         <Container maxWidth="100vw">
-            <Typography variant="h4" component="h2" gutterBottom>Generated Flashcard Preview</Typography>
+            <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}} gutterBottom>Generated Flashcard Preview</Typography>
             <Grid container spacing={3} sx={{mt: 4}}>
                 {flashcards.map((flashcard, index) => (
                     <Grid item xs = {12} sm = {6} md = {4} key = {index}>
-                        <Card>
+                        <Card sx={{backgroundColor: theme.palette.secondary.contrastText, color: theme.palette.primary.contrastText}}>
                             <CardActionArea onClick={() => handleCardClick(index)}>
                                 <CardContent>
                                     <Box sx={{
