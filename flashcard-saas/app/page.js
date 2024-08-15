@@ -76,7 +76,7 @@ export default function Home() {
       <Box 
         sx={{
           textAlign: "center",
-          my: 4,
+          my: 24,
         }}
       >
         <Typography variant="h2" gutterBottom>Welcome to Flasher.io</Typography>
@@ -99,7 +99,7 @@ export default function Home() {
         }} 
         
         href="/generate">
-          Get Started
+          Get Started For Free
         </Button>
       </Box>
 
