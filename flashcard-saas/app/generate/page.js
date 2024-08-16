@@ -49,7 +49,7 @@ export default function Generate() {
   const [flashcards, setFlashcards] = useState([])
   const [flipped, setFlipped] = useState([])
   const [text, setText] = useState('')
-  const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 12})
+  const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 7})
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
   const router = useRouter();
@@ -91,6 +91,14 @@ export default function Generate() {
 			topic: newTopic
 		}))
 	}
+
+  const updateNum = (newNum) =>
+  {
+	setCardDescription((prevState) => ({
+		...prevState,
+		cardNum: newNum
+	}))
+  }
 
   const handleSubmit = async () => {
     // We'll implement the API call here
@@ -208,6 +216,7 @@ export default function Generate() {
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards
 					</Typography>
+					<TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
 					<TextField
 						value={cardDescription.topic}
 						onChange={(e) => updateTopic(e.target.value)}
