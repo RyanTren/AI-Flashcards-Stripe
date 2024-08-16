@@ -49,10 +49,12 @@ export default function Generate() {
   const [flashcards, setFlashcards] = useState([])
   const [flipped, setFlipped] = useState([])
   const [text, setText] = useState('')
-//   const [responseJson, setResponseJson] = useState({topic: "", cardNum: 12})
+  const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 12})
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
   const router = useRouter();
+
+	
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
@@ -82,12 +84,21 @@ export default function Generate() {
 	);
   }
 
+  const updateTopic = (newTopic) =>
+	{
+		setCardDescription((prevState) => ({
+			...prevState,
+			topic: newTopic
+		}))
+	}
+
   const handleSubmit = async () => {
     // We'll implement the API call here
 
 		fetch ('api/generate', {
         method: 'POST',
-        body: text,
+		headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(cardDescription),
         })
         .then((res) => res.json())
         .then((data) => setFlashcards(data))
@@ -198,8 +209,8 @@ export default function Generate() {
 						Generate Flashcards
 					</Typography>
 					<TextField
-						value={text}
-						onChange={(e) => setText(e.target.value)}
+						value={cardDescription.topic}
+						onChange={(e) => updateTopic(e.target.value)}
 						label="Enter text"
 						fullWidth
 						multiline

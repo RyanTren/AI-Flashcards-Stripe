@@ -32,8 +32,9 @@ export default function SignUpPage(){
                 Flasher.io
                 </Typography>
                 <Button color="inherit" sx={{color: theme.palette.primary.contrastText}}>
-                <Link href="/sign-in" passHref/>
+                <Link href="/sign-in" passHref>
                     Login
+                </Link>
                 </Button>
             </Toolbar>
         </AppBar>
