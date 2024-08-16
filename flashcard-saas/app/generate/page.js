@@ -100,6 +100,11 @@ export default function Generate() {
 	}))
   }
 
+  const removeFlashcard = async (indexToRemove) => {
+	const updatedList = flashcards.filter((item, index) => index !== indexToRemove)
+	setFlashcards(updatedList);
+}
+
   const handleSubmit = async () => {
     // We'll implement the API call here
 
@@ -212,6 +217,7 @@ export default function Generate() {
 					}}>
 					View Flashcard Sets
 				</Button>
+
 				<Box sx={{ my: 4 }}>
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards
@@ -293,6 +299,7 @@ export default function Generate() {
 												</Box>
 											</CardContent>
 										</CardActionArea>
+										<Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>
 									</Card>
 								</Grid>
 							))}

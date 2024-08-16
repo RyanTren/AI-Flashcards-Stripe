@@ -2,7 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
-import {collection, doc, getDocs, setDoc} from "firebase/firestore"
+import {collection, doc, getDocs, setDoc, deleteDoc} from "firebase/firestore"
 import { db } from "@/firebase"
 
 import { useSearchParams } from "next/navigation"
@@ -52,6 +52,16 @@ export default function Flashcard() {
         getFlashcard()
     }, [user, search])
 
+
+    const removeFlashcard = async (index) => {
+        const colRef = collection(doc(db, "users", user.id), search)
+        const docsSnapshot = await getDocs(colRef)
+        await deleteDoc(docsSnapshot.docs[index].ref)
+
+        const updatedSnapshot = await getDocs(colRef);
+        const updatedCards = updatedSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setFlashcards(updatedCards);
+    }
 
     const handleCardClick = (id) => {
         setFlipped((prev) => ({
@@ -129,6 +139,7 @@ export default function Flashcard() {
                                     </Box>
                                 </CardContent>
                             </CardActionArea>
+                            <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>
                         </Card>
                     </Grid>
                 ))}
