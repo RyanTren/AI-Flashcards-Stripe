@@ -1,6 +1,7 @@
 'use client'
 
 import './globals.css';
+import Logo from '../public/assets/logo.png';
 
 import React from 'react';
 import Image from "next/image";
@@ -10,6 +11,7 @@ import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/
 import Head from "next/head";
 import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
 import { createTheme } from '@mui/material/styles';
+
 
 const theme = createTheme({
   palette: {
@@ -61,9 +63,9 @@ export default function Home() {
         <meta name = "description" content = "Create Flashcard from your text" />
       </Head>
 
-      <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
+      <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
         <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}>Flasher.io</Typography>
+          <Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.light}}>Flasher.io</Typography>
           <SignedOut>
             <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
             <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
@@ -79,16 +81,16 @@ export default function Home() {
           textAlign: "center",
           py: 4,
           mb: 4,
+          borderRadius: 2,
           backgroundColor: theme.palette.secondary.dark
         }}
       >
-        <Typography variant="h2" gutterBottom>Welcome to Flasher.io</Typography>
 
-        <Image src="/assets/HomeScreenLogo.png" alt="Flasher.io Logo" width={300} height={125} />
+        <Image src={Logo} alt="Flasher.io Logo" width={300} height="120vh" sx={{textAlign: "center"}} />
 
         <Typography variant="h5" gutterBottom>
           {' '}
-          The easiest way to make flash cards from your custom input
+          the easiest way to make flash cards from your custom input
         </Typography>
 
         <Button 
@@ -111,18 +113,17 @@ export default function Home() {
 
       <Box
         sx={{
-          my: 25,
+          my: 35,
           pt: 5,
-          pb: 10,
+          pb: 5,
           px: 3,
-          borderRadius: 10,
+          borderRadius: 2,
           textAlign: "center",
           backgroundColor: theme.palette.secondary.dark
         }}
       >
         <Typography variant="h4" gutterBottom>Features</Typography>
-
-        <Grid container spacing = {4}>
+        <Grid container spacing = {3}>
           <Grid item xs={12} md={6}>  
             <Box
               sx={{
@@ -207,16 +208,14 @@ export default function Home() {
           my: 25,
           textAlign: "center",
           pt: 5,
-          pb: 10,
+          pb: 5,
           px: 3,
-          borderRadius: 10,
+          borderRadius: 2,
           backgroundColor: theme.palette.secondary.dark
         }}
       >
-
         <Typography variant="h4" gutterBottom>Pricing</Typography>
-
-        <Grid container spacing = {4}>
+        <Grid container spacing = {3}>
           <Grid item xs={12} md={6}>
             <Box
               sx={{
@@ -291,8 +290,13 @@ export default function Home() {
           </Grid>
 
         </Grid>
-
       </Box>
+
+      <footer>
+        <Typography variant="body1" align="center" width="100%" fontSize={20} sx={{backgroundColor: theme.palette.secondary.dark, color: theme.palette.primary.light}}>
+          Ryan, Mason, Jeremiah, & Nabit © 2021 Flasher.io. All rights reserved.
+        </Typography>
+      </footer>
     </Container>
   );
 }
