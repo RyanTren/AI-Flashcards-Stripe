@@ -49,6 +49,7 @@ export default function Generate() {
   const [flashcards, setFlashcards] = useState([])
   const [flipped, setFlipped] = useState([])
   const [text, setText] = useState('')
+//   const [responseJson, setResponseJson] = useState({topic: "", cardNum: 12})
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
   const router = useRouter();
