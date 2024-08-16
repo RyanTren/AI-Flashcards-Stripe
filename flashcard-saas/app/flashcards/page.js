@@ -91,7 +91,19 @@ export default function Flashcards() {
 
             <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}}>Saved Flashcard Sets</Typography>
 
-            <Grid container spacing={3} sx={{ mt: 4 }}>
+            <Grid 
+                container  
+                spacing={2} 
+                sx={{
+                    my: 3,
+                    pt: 3,
+                    pb: 3,
+                    px: 3,
+                    borderRadius: 2,
+                    textAlign: "center",
+                    backgroundColor: theme.palette.primary.dark,
+                }}
+            >
             {flashcards.map((flashcard, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>
                     <Card sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.main}}>
@@ -107,6 +119,7 @@ export default function Flashcards() {
                             sx={{ 
                                 my: 2,
                                 mr: 2,
+                                ml: 2,
                                 mt: 2,
                                 alignContent: "center",
                                 alignItems: "center",
