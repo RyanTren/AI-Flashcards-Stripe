@@ -3,7 +3,7 @@
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
 
-import { CollectionReference, doc, getDoc, setDoc } from "firebase/firestore"
+import { CollectionReference, doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 import { db } from "@/firebase"
 import { useRouter } from "next/navigation"
 import { Container, Grid, Card, CardActionArea, CardContent, Typography, Button } from "@mui/material"
@@ -57,24 +57,21 @@ export default function Flashcards() {
         router.push(`/flashcard?id=${id}`)
     }
 
+    const handleRemoveSet = async (name) => {
+        if (!user) return;
+        const docRef = doc(db, 'users', user.id);
+        const docSnap = await getDoc(docRef);
+    
+        if (docSnap.exists()) {
+          const currentFlashcards = docSnap.data().flashcards || [];
+          const updatedFlashcards = currentFlashcards.filter((flashcard) => flashcard.name !== name);
+          await updateDoc(docRef, { flashcards: updatedFlashcards });
+          setFlashcards(updatedFlashcards);
+        }
+    };
+
     return(
         <Container maxWidth="100vw">
-            <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}}>Saved Flashcard Sets</Typography>
-            <Grid container spacing={3} sx={{ mt: 4 }}>
-            {flashcards.map((flashcard, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.main}}>
-                    <CardActionArea onClick={() => handleCardClick(flashcard.name)}>
-                    <CardContent>
-                        <Typography variant="h5" component="div">
-                        {flashcard.name}
-                        </Typography>
-                    </CardContent>
-                    </CardActionArea>
-                </Card>
-                </Grid>
-            ))}
-            </Grid>
             <Button href="/" 
             sx={{
                 mt: 2, 
@@ -91,6 +88,42 @@ export default function Flashcards() {
             }}>
             Back Page
             </Button>
+
+            <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}}>Saved Flashcard Sets</Typography>
+
+            <Grid container spacing={3} sx={{ mt: 4 }}>
+            {flashcards.map((flashcard, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Card sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.main}}>
+                        <CardActionArea onClick={() => handleCardClick(flashcard.name)}>
+                            <CardContent>
+                                <Typography variant="h5" component="div">
+                                {flashcard.name}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                        <Button 
+                            onClick={() => handleRemoveSet(flashcard.name)}
+                            sx={{ 
+                                my: 2,
+                                mr: 2,
+                                mt: 2,
+                                alignContent: "center",
+                                alignItems: "center",
+                                textAlign: "center", 
+                                backgroundColor: theme.palette.secondary.main, 
+                                color: theme.palette.primary.contrastText,
+                                '&:hover': {
+                                    backgroundColor: theme.palette.secondary.dark,
+                                    color: theme.palette.primary.contrastText,
+                                }
+                            }}>
+                            Remove Set
+                        </Button>
+                    </Card>
+                </Grid>
+            ))}
+            </Grid>
         </Container>
     )
 }

@@ -12,7 +12,6 @@ import Head from "next/head";
 import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
 import { createTheme } from '@mui/material/styles';
 
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -90,7 +89,7 @@ export default function Home() {
 
         <Typography variant="h5" gutterBottom>
           {' '}
-          the easiest way to make flash cards from your custom input
+          the easiest way to make flashcards from your custom input
         </Typography>
 
         <Button 
@@ -113,7 +112,7 @@ export default function Home() {
 
       <Box
         sx={{
-          my: 35,
+          my: 3,
           pt: 5,
           pb: 5,
           px: 3,
@@ -205,7 +204,7 @@ export default function Home() {
 
       <Box
         sx={{
-          my: 25,
+          my: 8,
           textAlign: "center",
           pt: 5,
           pb: 5,
@@ -250,8 +249,6 @@ export default function Home() {
               </Button>
             </Box>
           </Grid>
-        
-
         
           <Grid item xs={12} md={6}>  
             <Box

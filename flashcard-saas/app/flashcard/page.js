@@ -67,6 +67,24 @@ export default function Flashcard() {
 
     return(
         <Container maxWidth="100vw">
+
+            <Button href="/flashcards" 
+                sx={{
+                    mt: 2, 
+                    position: "flex",
+                    alignContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    backgroundColor: theme.palette.secondary.contrastText, 
+                    color: theme.palette.primary.main, 
+                    '&:hover': {
+                    backgroundColor: theme.palette.secondary.contrastText,
+                    color: theme.palette.primary.main,
+                    },
+            }}>
+                Back Page
+            </Button>
+
             <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}} gutterBottom>Generated Flashcard Preview</Typography>
             <Grid container spacing={3} sx={{mt: 4}}>
                 {flashcards.map((flashcard, index) => (
@@ -115,22 +133,6 @@ export default function Flashcard() {
                     </Grid>
                 ))}
             </Grid>
-            <Button href="/flashcards" 
-            sx={{
-                mt: 2, 
-                position: "flex",
-                alignContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-                backgroundColor: theme.palette.secondary.contrastText, 
-                color: theme.palette.primary.main, 
-                '&:hover': {
-                backgroundColor: theme.palette.secondary.contrastText,
-                color: theme.palette.primary.main,
-                },
-            }}>
-            Back Page
-            </Button>
         </Container>
     )
 }
