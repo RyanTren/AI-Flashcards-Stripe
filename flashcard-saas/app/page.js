@@ -2,6 +2,7 @@
 
 import './globals.css';
 import Logo from '../public/assets/logo.png';
+import SmallLogo from '../public/assets/SmallHomeScreenLogo.png';
 
 import React from 'react';
 import Image from "next/image";
@@ -64,7 +65,7 @@ export default function Home() {
 
       <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
         <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}>Flasher.io</Typography>
+          <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
           <SignedOut>
             <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
             <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
