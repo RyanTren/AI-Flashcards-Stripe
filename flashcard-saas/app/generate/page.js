@@ -145,6 +145,7 @@ export default function Generate() {
 						alignContent: "center",
 						alignItems: "center",
 						textAlign: "center",
+						mr: 3,
 						backgroundColor: theme.palette.secondary.contrastText, 
 						color: theme.palette.primary.main, 
 						'&:hover': {

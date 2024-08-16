@@ -11,10 +11,8 @@ export default function SignUpPage(){
                 <Typography variant="h6" sx={{flexGrow: 1}}>
                 Flasher.io
                 </Typography>
-                <Button color="inherit">
-                <Link href="/sign-in" passHref>
+                <Button href="/sign-in" passHref color="inherit">
                     Login
-                </Link>
                 </Button>
             </Toolbar>
         </AppBar>

@@ -13,7 +13,7 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#676fgd',
+      light: '#676f8d',
       main: '#424769',
       dark: '#2d3250',
       contrastText: '#ffffff',
@@ -76,7 +76,9 @@ export default function Home() {
       <Box 
         sx={{
           textAlign: "center",
-          my: 4,
+          py: 4,
+          mb: 4,
+          backgroundColor: theme.palette.secondary.dark
         }}
       >
         <Typography variant="h2" gutterBottom>Welcome to Flasher.io</Typography>
@@ -106,7 +108,12 @@ export default function Home() {
       <Box
         sx={{
           my: 25,
+          pt: 5,
+          pb: 10,
+          px: 3,
+          borderRadius: 10,
           textAlign: "center",
+          backgroundColor: theme.palette.secondary.dark
         }}
       >
         <Typography variant="h4" gutterBottom>Features</Typography>
@@ -120,6 +127,7 @@ export default function Home() {
                 borderColor: theme.palette.primary.light,
                 backgroundColor: theme.palette.primary.light,
                 borderRadius: 2,
+                height: "160px"
               }}
             >
               <Typography variant="h5" gutterBottom>Custom Prompt Creation</Typography>  
@@ -138,6 +146,7 @@ export default function Home() {
                 borderColor: theme.palette.primary.light,
                 backgroundColor: theme.palette.primary.light,
                 borderRadius: 2,
+                height: "160px"
               }}
             >
               <Typography variant="h5" gutterBottom>AI-Powered Flashcard Creation</Typography>  
@@ -156,6 +165,7 @@ export default function Home() {
                 borderColor: theme.palette.primary.light,
                 backgroundColor: theme.palette.primary.light,
                 borderRadius: 2,
+                height: "160px"
               }}
             >
               <Typography variant="h5" gutterBottom>Interactive Learning Experience</Typography>  
@@ -174,6 +184,7 @@ export default function Home() {
                 borderColor: theme.palette.primary.light,
                 backgroundColor: theme.palette.primary.light,
                 borderRadius: 2,
+                height: "160px"
               }}
             >
               <Typography variant="h5" gutterBottom>Seamless Integration with Firebase</Typography>  
@@ -262,6 +273,11 @@ export default function Home() {
         sx={{
           my: 25,
           textAlign: "center",
+          pt: 5,
+          pb: 10,
+          px: 3,
+          borderRadius: 10,
+          backgroundColor: theme.palette.secondary.dark
         }}
       >
 
@@ -276,6 +292,7 @@ export default function Home() {
                 borderColor: theme.palette.primary.light,
                 backgroundColor: theme.palette.primary.light,
                 borderRadius: 2,
+                height: "225px"
               }}
             >
               <Typography variant="h5" gutterBottom>Basic</Typography>  
@@ -312,6 +329,7 @@ export default function Home() {
                 borderColor: theme.palette.primary.light,
                 backgroundColor: theme.palette.primary.light,
                 borderRadius: 2,
+                height: "225px"
               }}
             >
               <Typography variant="h5" gutterBottom>Pro</Typography>  
