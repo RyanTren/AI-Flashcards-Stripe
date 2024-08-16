@@ -59,9 +59,9 @@ export default function Generate() {
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
     return <Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">Loading...</Typography>;
-  }
+}
 
-  if (!isSignedIn) {
+if (!isSignedIn) {
     return(
 		<Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
 
@@ -82,9 +82,9 @@ export default function Generate() {
 		</Typography>
 		</Container>
 	);
-  }
+}
 
-  const handleSubmit = async () => {
+const handleSubmit = async () => {
     // We'll implement the API call here
 
 		fetch ('api/generate', {
@@ -109,6 +109,10 @@ export default function Generate() {
 
 		const handleClose = () => {
 			setOpen(false)
+		}
+
+		const handleRefresh = () => {
+			setFlashcards([])
 		}
 
 		const saveFlashcards = async () => {
@@ -173,7 +177,7 @@ export default function Generate() {
             </AppBar>
 
 
-				 <Button href="/" 
+				<Button href="/" 
 					sx={{
 						mt: 2, 
 						position: "flex",
@@ -296,7 +300,8 @@ export default function Generate() {
 							<Button 
 								variant='container' 
 								color='primary'
-								sx={{ 
+								sx={{
+									margin: 2, 
 									mt: 2, 
 									my: 12,
 									backgroundColor: theme.palette.secondary.main, 
@@ -307,6 +312,20 @@ export default function Generate() {
 									}
 								}} 
 								onClick={handleOpen}>Save Flashcard Set</Button>
+							<Button 
+								variant='container' 
+								color='primary'
+								sx={{ 
+									mt: 2, 
+									my: 12,
+									backgroundColor: theme.palette.secondary.main, 
+									color: theme.palette.primary.contrastText,
+									'&:hover': {
+										backgroundColor: theme.palette.secondary.dark,
+										color: theme.palette.primary.contrastText,
+									}
+								}} 
+								onClick={() => { handleRefresh(); handleSubmit(); }}> Refresh Flashcard Set</Button>
 						</Box>
 					</Box>
 				)}
