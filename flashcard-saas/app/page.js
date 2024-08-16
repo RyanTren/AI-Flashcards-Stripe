@@ -1,8 +1,10 @@
 'use client'
 
 import './globals.css';
+import Logo from '../public/assets/logo.png';
 
-import { Image } from "next/image";
+import React from 'react';
+import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/material";
@@ -60,9 +62,9 @@ export default function Home() {
         <meta name = "description" content = "Create Flashcard from your text" />
       </Head>
 
-      <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
+      <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
         <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}>Flasher.io</Typography>
+          <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}>Flasher.io</Typography>
           <SignedOut>
             <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
             <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
@@ -76,21 +78,26 @@ export default function Home() {
       <Box 
         sx={{
           textAlign: "center",
+          my: 2,
           py: 4,
           mb: 4,
+          borderRadius: 2,
           backgroundColor: theme.palette.secondary.dark
         }}
       >
-        <Typography variant="h2" gutterBottom>Welcome to Flasher.io</Typography>
+
+        <Image src={Logo} alt="Flasher.io Logo" width={300} height="120vh" sx={{textAlign: "center"}} />
+
         <Typography variant="h5" gutterBottom>
           {' '}
-          The easiest way to make flash cards from your custom input
+          the easiest way to make flashcards from your custom input
         </Typography>
 
         <Button 
         variant="contained" 
         color = "primary" 
         sx = {{
+          my: 2,
           mt: 2, 
           backgroundColor: theme.palette.secondary.contrastText, 
           color: theme.palette.primary.main, 
@@ -107,18 +114,17 @@ export default function Home() {
 
       <Box
         sx={{
-          my: 25,
+          my: 2,
           pt: 5,
-          pb: 10,
+          pb: 5,
           px: 3,
-          borderRadius: 10,
+          borderRadius: 2,
           textAlign: "center",
           backgroundColor: theme.palette.secondary.dark
         }}
       >
         <Typography variant="h4" gutterBottom>Features</Typography>
-
-        <Grid container spacing = {4}>
+        <Grid container spacing = {3}>
           <Grid item xs={12} md={6}>  
             <Box
               sx={{
@@ -194,96 +200,23 @@ export default function Home() {
               </Typography>
             </Box>
           </Grid>
-
-        </Grid>
-
-        <Grid container spacing = {0} gap = {5}>
-        {/* <Box
-              sx={{
-                p: 4,
-                border: '1px solid',
-                borderColor: theme.palette.primary.light,
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: 2,
-                textAlign: "center",
-                alignItems: "center",
-                alignContent: "center",
-                position: "relative",
-              }}
-        >
-          <Grid item xs={6} md={8} sx={{textAlign: "center", alignItems: "center", alignContent: "center"}}>
-            <Typography variant="h6" gutterBottom>Easy Text Input</Typography>  
-            <Typography> 
-              {' '}
-              Simply input your text and our software will do the rest. Create flashcards faster than ever
-            </Typography>
-          </Grid>
-        </Box>
-        
-
-        <Box
-              sx={{
-                p: 4,
-                border: '1px solid',
-                borderColor: theme.palette.primary.light,
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: 2,
-                textAlign: "center",
-                alignItems: "center",
-                alignContent: "center",
-                position: "relative",
-              }}
-        >
-          <Grid item xs={6} md={8} sx={{textAlign: "center", alignItems: "center", alignContent: "center"}}>
-            <Typography variant="h6" gutterBottom>Smart Flashcards</Typography>  
-            <Typography>
-              {' '} 
-              Our AI breaks down your text into flashcards, making it easier to study
-            </Typography>
-          </Grid>
-        </Box> */}
-        
-        
-        {/* <Box
-              sx={{
-                p: 4,
-                border: '1px solid',
-                borderColor: theme.palette.primary.light,
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: 2,
-                textAlign: "center",
-                alignItems: "center",
-                alignContent: "center",
-                position: "relative",
-              }}
-        >
-          <Grid item xs={6} md={8} sx={{textAlign: "center", alignItems: "center", alignContent: "center"}}>
-            <Typography variant="h6" gutterBottom>Accessible Anywhere</Typography>  
-            <Typography>
-              {' '}
-              Access your flashcards from anywhere in the world, no need to carry around physical cards
-            </Typography>
-          </Grid>
-        </Box> */}
         </Grid>
       </Box>
     
 
       <Box
         sx={{
-          my: 25,
+          my: 4,
           textAlign: "center",
           pt: 5,
-          pb: 10,
+          pb: 5,
           px: 3,
-          borderRadius: 10,
+          borderRadius: 2,
           backgroundColor: theme.palette.secondary.dark
         }}
       >
-
         <Typography variant="h4" gutterBottom>Pricing</Typography>
-
-        <Grid container spacing = {4}>
+        <Grid container spacing = {3}>
           <Grid item xs={12} md={6}>
             <Box
               sx={{
@@ -318,8 +251,6 @@ export default function Home() {
               </Button>
             </Box>
           </Grid>
-        
-
         
           <Grid item xs={12} md={6}>  
             <Box
@@ -358,8 +289,13 @@ export default function Home() {
           </Grid>
 
         </Grid>
-
       </Box>
+
+      <footer>
+        <Typography variant="body1" align="center" width="100" height="auto" fontSize={16} sx={{color: theme.palette.primary.light}}>
+          Ryan, Mason, Jeremiah, & Nabit © 2021 Flasher.io. All rights reserved.
+        </Typography>
+      </footer>
     </Container>
   );
 }
