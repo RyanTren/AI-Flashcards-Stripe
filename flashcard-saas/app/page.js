@@ -11,6 +11,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/material";
 import Head from "next/head";
 import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
+
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -93,6 +94,8 @@ export default function Home() {
           {' '}
           the easiest way to make flashcards from your custom input
         </Typography>
+
+
 
         <Button 
         variant="contained" 
