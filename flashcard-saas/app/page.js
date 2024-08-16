@@ -2,7 +2,8 @@
 
 import './globals.css';
 
-import { Image } from "next/image";
+import React from 'react';
+import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/material";
@@ -82,6 +83,9 @@ export default function Home() {
         }}
       >
         <Typography variant="h2" gutterBottom>Welcome to Flasher.io</Typography>
+
+        <Image src="/assets/HomeScreenLogo.png" alt="Flasher.io Logo" width={300} height={125} />
+
         <Typography variant="h5" gutterBottom>
           {' '}
           The easiest way to make flash cards from your custom input
@@ -194,77 +198,6 @@ export default function Home() {
               </Typography>
             </Box>
           </Grid>
-
-        </Grid>
-
-        <Grid container spacing = {0} gap = {5}>
-        {/* <Box
-              sx={{
-                p: 4,
-                border: '1px solid',
-                borderColor: theme.palette.primary.light,
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: 2,
-                textAlign: "center",
-                alignItems: "center",
-                alignContent: "center",
-                position: "relative",
-              }}
-        >
-          <Grid item xs={6} md={8} sx={{textAlign: "center", alignItems: "center", alignContent: "center"}}>
-            <Typography variant="h6" gutterBottom>Easy Text Input</Typography>  
-            <Typography> 
-              {' '}
-              Simply input your text and our software will do the rest. Create flashcards faster than ever
-            </Typography>
-          </Grid>
-        </Box>
-        
-
-        <Box
-              sx={{
-                p: 4,
-                border: '1px solid',
-                borderColor: theme.palette.primary.light,
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: 2,
-                textAlign: "center",
-                alignItems: "center",
-                alignContent: "center",
-                position: "relative",
-              }}
-        >
-          <Grid item xs={6} md={8} sx={{textAlign: "center", alignItems: "center", alignContent: "center"}}>
-            <Typography variant="h6" gutterBottom>Smart Flashcards</Typography>  
-            <Typography>
-              {' '} 
-              Our AI breaks down your text into flashcards, making it easier to study
-            </Typography>
-          </Grid>
-        </Box> */}
-        
-        
-        {/* <Box
-              sx={{
-                p: 4,
-                border: '1px solid',
-                borderColor: theme.palette.primary.light,
-                backgroundColor: theme.palette.primary.light,
-                borderRadius: 2,
-                textAlign: "center",
-                alignItems: "center",
-                alignContent: "center",
-                position: "relative",
-              }}
-        >
-          <Grid item xs={6} md={8} sx={{textAlign: "center", alignItems: "center", alignContent: "center"}}>
-            <Typography variant="h6" gutterBottom>Accessible Anywhere</Typography>  
-            <Typography>
-              {' '}
-              Access your flashcards from anywhere in the world, no need to carry around physical cards
-            </Typography>
-          </Grid>
-        </Box> */}
         </Grid>
       </Box>
     
