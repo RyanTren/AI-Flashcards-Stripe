@@ -158,7 +158,18 @@ export default function Generate() {
 		
 
 		return (
-			<Container maxWidth="md">
+			<Container maxWidth="100vw">
+
+			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
+                <Toolbar>
+                <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}>Flasher.io</Typography>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                </Toolbar>
+            </AppBar>
+
+
 				 <Button href="/" 
 					sx={{
 						mt: 2, 
@@ -179,7 +190,8 @@ export default function Generate() {
 				<Button href="/flashcards" 
 					sx={{
 						mt: 2, 
-						position: "flex",
+						position: "absolute",
+						right: 25,
 						alignContent: "center",
 						alignItems: "center",
 						textAlign: "center",
@@ -192,6 +204,7 @@ export default function Generate() {
 					}}>
 					View Flashcard Sets
 				</Button>
+
 				<Box sx={{ my: 4 }}>
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards
