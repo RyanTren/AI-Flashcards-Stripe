@@ -101,7 +101,7 @@ export default function Home() {
         }} 
         
         href="/generate">
-          Get Started
+          Get Started For Free
         </Button>
       </Box>
 

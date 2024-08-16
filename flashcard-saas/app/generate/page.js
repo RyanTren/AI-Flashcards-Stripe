@@ -8,6 +8,9 @@ import {
   Button,
   Typography,
   Box,
+  Head,
+  AppBar,
+  Toolbar,
 	Grid,
 	Card,
 	CardActionArea,
@@ -22,6 +25,7 @@ import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
 import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 import { createTheme } from '@mui/material/styles';
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const theme = createTheme({
   palette: {
@@ -56,7 +60,24 @@ export default function Generate() {
 
   if (!isSignedIn) {
     return(
-		<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">You must be signed in to generate flashcards.</Typography>
+		<Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
+
+			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
+				<Toolbar>
+				<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}>Flasher.io</Typography>
+				<SignedOut>
+					<Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
+					<Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
+				</SignedOut>
+				<SignedIn>
+					<UserButton />
+				</SignedIn>
+				</Toolbar> 
+			</AppBar>
+		<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
+			You must be signed in to generate flashcards.
+		</Typography>
+		</Container>
 	);
   }
 
