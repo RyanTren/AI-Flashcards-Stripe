@@ -64,7 +64,7 @@ export default function Home() {
 
       <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
         <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.light}}>Flasher.io</Typography>
+          <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}>Flasher.io</Typography>
           <SignedOut>
             <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
             <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
@@ -78,6 +78,7 @@ export default function Home() {
       <Box 
         sx={{
           textAlign: "center",
+          my: 2,
           py: 4,
           mb: 4,
           borderRadius: 2,
@@ -96,6 +97,7 @@ export default function Home() {
         variant="contained" 
         color = "primary" 
         sx = {{
+          my: 2,
           mt: 2, 
           backgroundColor: theme.palette.secondary.contrastText, 
           color: theme.palette.primary.main, 
@@ -112,7 +114,7 @@ export default function Home() {
 
       <Box
         sx={{
-          my: 3,
+          my: 2,
           pt: 5,
           pb: 5,
           px: 3,
@@ -204,7 +206,7 @@ export default function Home() {
 
       <Box
         sx={{
-          my: 8,
+          my: 4,
           textAlign: "center",
           pt: 5,
           pb: 5,
@@ -290,7 +292,7 @@ export default function Home() {
       </Box>
 
       <footer>
-        <Typography variant="body1" align="center" width="100%" fontSize={20} sx={{backgroundColor: theme.palette.secondary.dark, color: theme.palette.primary.light}}>
+        <Typography variant="body1" align="center" width="100" height="auto" fontSize={16} sx={{color: theme.palette.primary.light}}>
           Ryan, Mason, Jeremiah, & Nabit © 2021 Flasher.io. All rights reserved.
         </Typography>
       </footer>
