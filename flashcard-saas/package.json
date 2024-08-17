@@ -20,6 +20,7 @@
     "firebase": "^10.12.5",
     "framer-motion": "^11.3.28",
     "lucide-react": "^0.428.0",
+    "mini-svg-data-uri": "^1.4.4",
     "openai": "^4.55.7",
     "postcss": "^8.4.41",
     "react": "^18.3.1",

@@ -291,7 +291,15 @@ export default function Flashcard() {
   }
 
   return (
-    <Container maxWidth="100vw">
+    <Container maxWidth="100vw" 
+    transition={{
+      delay: 0.3,
+      duration: 0.8,
+      ease: "easeInOut",
+    }}
+    >
+
+
       <Typography
         variant="h2"
         component="h1"
@@ -393,6 +401,7 @@ export default function Flashcard() {
       >
         Match
       </Button>
+
     </Container>
   );
 }

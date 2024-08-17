@@ -27,8 +27,10 @@ import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 import { createTheme } from '@mui/material/styles';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import { FlipWords } from '@/components/ui/flip-words'
 
 import SmallLogo from '../../public/assets/SmallHomeScreenLogo.png';
+import { Flip } from 'gsap/all'
 
 const theme = createTheme({
   palette: {
@@ -46,6 +48,8 @@ const theme = createTheme({
     },
   },
 });
+
+const words = ["Better ", "Fast ", "Detailed ", "Simple "];
 
 export default function Generate() {
   const {isLoading, isSignedIn, user} = useUser()
@@ -212,10 +216,13 @@ const handleSubmit = async () => {
 					View Flashcard Sets
 				</Button>
 
+
 				<Box sx={{ my: 4 }}>
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
-						Generate Flashcards
+						<FlipWords words={words} className='flip-words-text' /> 
+						 AI Flashcard Generation
 					</Typography>
+
 					<TextField
 						value={text}
 						onChange={(e) => setText(e.target.value)}
@@ -224,8 +231,7 @@ const handleSubmit = async () => {
 						multiline
 						rows={6}
 						variant="outlined"
-						sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}
-						
+						sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}	
 					/>
 					<Button
 						variant="contained"
