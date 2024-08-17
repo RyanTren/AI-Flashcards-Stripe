@@ -19,7 +19,8 @@ import {
 	DialogTitle,
 	DialogContent,
 	DialogContentText,
-	DialogActions
+	DialogActions,
+	CircularProgress,
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
@@ -62,7 +63,10 @@ export default function Generate() {
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
-    return <Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">Loading...</Typography>;
+    return <Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
+		<CircularProgress />
+		Loading...
+	</Typography>;
 }
 
 if (!isSignedIn) {
