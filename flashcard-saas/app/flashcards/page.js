@@ -71,8 +71,10 @@ export default function Flashcards() {
     };
 
     return(
-        <Container maxWidth="100vw">
-            <Button href="/" 
+        <Container>
+            <Button 
+            maxWidth="100vw"
+            href="/" 
             sx={{
                 mt: 2, 
                 position: "flex",

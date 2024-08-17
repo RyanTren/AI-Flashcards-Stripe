@@ -6,6 +6,9 @@ import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "@/firebase";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Spotlight } from "@/components/ui/spotlight";
+
 
 import {
   Container,
@@ -182,6 +185,12 @@ export default function Flashcard() {
   if (matchMode) {
     return (
       <Container>
+
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20"
+          fill="white"
+        />
+
         <Typography
           variant="h2"
           component="h1"
@@ -291,13 +300,18 @@ export default function Flashcard() {
   }
 
   return (
-    <Container maxWidth="100vw" 
+    <Container
     transition={{
       delay: 0.3,
       duration: 0.8,
       ease: "easeInOut",
     }}
     >
+
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
 
 
       <Typography
