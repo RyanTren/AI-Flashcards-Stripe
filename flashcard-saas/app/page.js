@@ -14,6 +14,7 @@ import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
 
 import { createTheme } from '@mui/material/styles';
 import { CardStack } from '@/components/ui/card-stack';
+import { Vortex } from '@/components/ui/vortex';
 
 const theme = createTheme({
   palette: {
@@ -102,6 +103,7 @@ export default function Home() {
         <Typography variant="h6" gutterBottom fontSize={14}>
           {' '}
           Make AI Flashcards from your custom input
+          <Vortex />
         </Typography>
 
         <Button 
