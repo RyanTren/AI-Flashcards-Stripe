@@ -297,7 +297,7 @@ export default function Home() {
 
       <footer>
         <Typography variant="body1" align="center" width="100" height="auto" fontSize={16} sx={{color: theme.palette.primary.light}}>
-          Ryan, Mason, Jeremiah, & Nabit © 2021 Flasher.io. All rights reserved.
+          Ryan, Mason, Jeremiah, & Nabit © 2024 Flasher.io. All rights reserved.
         </Typography>
       </footer>
     </Container>
