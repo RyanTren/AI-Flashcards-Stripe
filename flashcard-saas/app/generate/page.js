@@ -20,12 +20,15 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogActions,
+	Stack,
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
 import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 import { createTheme } from '@mui/material/styles';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const theme = createTheme({
   palette: {
@@ -52,9 +55,12 @@ export default function Generate() {
   const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 7})
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
   const router = useRouter();
 
-	
+  const [openAdd, setOpenAdd] = useState(false)
+  const [flashcardFront, setFlashcardFront] = useState("")
+  const [flashcardBack, setFlashcardBack] = useState("")
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
@@ -100,12 +106,19 @@ export default function Generate() {
 	}))
   }
 
-  const removeFlashcard = async (indexToRemove) => {
+  const removeFlashcard = (indexToRemove) => {
 	const updatedList = flashcards.filter((item, index) => index !== indexToRemove)
 	setFlashcards(updatedList);
 }
 
-  const handleSubmit = async () => {
+  const addFlashcard = (newFront, newBack) => {
+	setFlashcards((prevState) => [
+		...prevState,
+		{front: newFront, back: newBack},
+	])
+  }
+
+  	const handleSubmit = async () => {
     // We'll implement the API call here
 
 		fetch ('api/generate', {
@@ -115,6 +128,9 @@ export default function Generate() {
         })
         .then((res) => res.json())
         .then((data) => setFlashcards(data))
+		.finally(() => {
+			setLoading(false);
+		});
 	}
     
 
@@ -132,6 +148,16 @@ export default function Generate() {
 		const handleClose = () => {
 			setOpen(false)
 		}
+
+		const handleAddOpen = () => {
+			setOpenAdd(true)
+		}
+
+		const handleAddClose = () => {
+			setOpenAdd(false)
+		}
+
+
 
 		const saveFlashcards = async () => {
 			if (!isSignedIn || isLoading) {
@@ -222,7 +248,12 @@ export default function Generate() {
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards
 					</Typography>
-					<TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
+					<Stack direction="row" mb={2} justifyContent={"space-between"} display="flex">
+						<TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
+						{
+							(loading ? <Box><CircularProgress/></Box> : null)
+						}
+					</Stack>
 					<TextField
 						value={cardDescription.topic}
 						onChange={(e) => updateTopic(e.target.value)}
@@ -245,7 +276,7 @@ export default function Generate() {
 							color: theme.palette.primary.main,
 							},
 						}}
-						onClick={handleSubmit}
+						onClick={() => {handleSubmit(); setLoading(true)}}
 						fullWidth
 					>
 						{' '}
@@ -306,6 +337,21 @@ export default function Generate() {
 						</Grid>
 						<Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
 							<Button 
+								onClick={handleAddOpen}
+								variant='container' 
+								color='primary'
+								sx={{ 
+									mt: 2, 
+									my: 12,
+									mr: 2,
+									backgroundColor: theme.palette.secondary.main, 
+									color: theme.palette.primary.contrastText,
+									'&:hover': {
+										backgroundColor: theme.palette.secondary.dark,
+										color: theme.palette.primary.contrastText,
+									}
+								}} >Add Flashcard</Button>
+							<Button 
 								variant='container' 
 								color='primary'
 								sx={{ 
@@ -343,6 +389,45 @@ export default function Generate() {
 					<DialogActions>
 						<Button onClick={handleClose}>Cancel</Button>
 						<Button onClick={saveFlashcards} color="primary">Save</Button>
+					</DialogActions>
+				</Dialog>
+
+				<Dialog open={openAdd} onClose={handleAddClose} fullWidth maxWidth="sm">
+					<DialogTitle>Add Flashcard</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Flashcard Front
+						</DialogContentText>
+						<TextField
+						autoFocus
+						margin = 'dense'
+						label = 'Title'
+						type = 'text'
+						fullWidth
+						value={flashcardFront}
+						onChange={(e) => setFlashcardFront(e.target.value)}
+						variant='outlined'
+						mb={50}
+						/>
+						<DialogContentText>
+							Flashcard Backs
+						</DialogContentText>
+						<TextField
+						multiline
+						rows={6}
+						autoFocus
+						margin = 'dense'
+						label = 'Description'
+						type = 'text'
+						fullWidth
+						value={flashcardBack}
+						onChange={(e) => setFlashcardBack(e.target.value)}
+						variant='outlined'
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleAddClose}>Cancel</Button>
+						<Button onClick={() => {addFlashcard(flashcardFront, flashcardBack); handleAddClose()}} color="primary">Add</Button>
 					</DialogActions>
 				</Dialog>
 			</Container>

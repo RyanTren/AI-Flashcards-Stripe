@@ -2,12 +2,12 @@
 
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
-import {collection, doc, getDocs, setDoc, deleteDoc} from "firebase/firestore"
+import {collection, doc, getDocs, setDoc, deleteDoc, addDoc} from "firebase/firestore"
 import { db } from "@/firebase"
 
 import { useSearchParams } from "next/navigation"
 
-import { Container, Grid, Box, Typography, Card, CardActionArea, CardContent, Button } from "@mui/material"
+import { Container, Grid, Box, Typography, Card, CardActionArea, CardContent, Button, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, TextField } from "@mui/material"
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -32,9 +32,14 @@ export default function Flashcard() {
     const {isLoaded, isSignedIn, user} = useUser()
     const [flashcards, setFlashcards] = useState([])
     const [flipped, setFlipped] = useState([])
+    const [open, setOpen] = useState(false)
+
+    const [flashcardFront, setFlashcardFront] = useState()
+    const [flashcardBack, setFlashcardBack] = useState()
 
     const searchParams = useSearchParams()
     const search = searchParams.get('id')
+
 
     useEffect(() => {
         async function getFlashcard(){
@@ -53,6 +58,14 @@ export default function Flashcard() {
     }, [user, search])
 
 
+    const addFlashcard = async (newFront, newBack) => {
+        const colRef = collection(doc(db, 'users', user.id), search)
+        const newFlashcard = {front: newFront, back: newBack}
+
+        const docRef = await addDoc(colRef, newFlashcard);
+        setFlashcards((prevState) => [...prevState, { id: docRef.id, ...newFlashcard }]);
+    }
+
     const removeFlashcard = async (index) => {
         const colRef = collection(doc(db, "users", user.id), search)
         const docsSnapshot = await getDocs(colRef)
@@ -70,6 +83,9 @@ export default function Flashcard() {
         }))
     }
 
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
+
     if(!isLoaded || !isSignedIn){
         return <></>
     }
@@ -78,9 +94,10 @@ export default function Flashcard() {
     return(
         <Container maxWidth="100vw">
 
-            <Button href="/flashcards" 
+            <Button href="/flashcards"
                 sx={{
                     mt: 2, 
+                    mr: 2,
                     position: "flex",
                     alignContent: "center",
                     alignItems: "center",
@@ -93,6 +110,22 @@ export default function Flashcard() {
                     },
             }}>
                 Back Page
+            </Button>
+            <Button onClick={() => {handleOpen()}} 
+                sx={{
+                    mt: 2, 
+                    position: "flex",
+                    alignContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    backgroundColor: theme.palette.secondary.contrastText, 
+                    color: theme.palette.primary.main, 
+                    '&:hover': {
+                    backgroundColor: theme.palette.secondary.contrastText,
+                    color: theme.palette.primary.main,
+                    },
+                }}>
+                Add Flashcard
             </Button>
 
             <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}} gutterBottom>Generated Flashcard Preview</Typography>
@@ -144,6 +177,44 @@ export default function Flashcard() {
                     </Grid>
                 ))}
             </Grid>
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+					<DialogTitle>Add Flashcard</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Flashcard Front
+						</DialogContentText>
+						<TextField
+						autoFocus
+						margin = 'dense'
+						label = 'Title'
+						type = 'text'
+						fullWidth
+						value={flashcardFront}
+						onChange={(e) => setFlashcardFront(e.target.value)}
+						variant='outlined'
+						mb={50}
+						/>
+						<DialogContentText>
+							Flashcard Backs
+						</DialogContentText>
+						<TextField
+						multiline
+						rows={6}
+						autoFocus
+						margin = 'dense'
+						label = 'Description'
+						type = 'text'
+						fullWidth
+						value={flashcardBack}
+						onChange={(e) => setFlashcardBack(e.target.value)}
+						variant='outlined'
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={() => handleClose}>Cancel</Button>
+						<Button onClick={() => {addFlashcard(flashcardFront, flashcardBack); handleClose();}} color="primary">Add</Button>
+					</DialogActions>
+				</Dialog>
         </Container>
     )
 }
