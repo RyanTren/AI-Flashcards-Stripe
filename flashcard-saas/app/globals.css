@@ -4,7 +4,16 @@
   margin: 0;
 }
 
+@font-face {
+  font-family: 'Coolvetica';
+  src: url(../public/fonts/coolvetica-rg.otf) format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 html, body{
   background-color: #424769;
   color: #ffffff;
+  font-family: 'Coolvetica', Helvetica;
 }

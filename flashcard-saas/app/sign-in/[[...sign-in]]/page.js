@@ -5,6 +5,9 @@ import { Container, Box, Typography, AppBar, Toolbar, Button } from '@mui/materi
 import { SignIn, SignUp } from '@clerk/nextjs'
 import Link from 'next/link'
 import { createTheme } from '@mui/material/styles';
+import Image from "next/image";
+
+import SmallLogo from '../../../public/assets/SmallHomeScreenLogo.png';
 
 const theme = createTheme({
   palette: {
@@ -29,17 +32,15 @@ export default function SignInPage(){
         <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color: theme.palette.primary.contrastText}}>
             <Toolbar>
                 <Typography variant="h6" sx={{flexGrow: 1}}>
-                    Flasher.io
+                    <Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/>
                 </Typography>
                 <Button color="inherit" sx={{color: theme.palette.primary.contrastText}}>
-                <Link href="/login" passHref>
+                <Link href="/login" passHref/>
                     Login
-                </Link>
                 </Button>
                 <Button color="inherit" sx={{color: theme.palette.primary.contrastText}}>
-                <Link href="/sign-up" passHref>
+                <Link href="/sign-up" passHref/>
                     Sign Up
-                </Link>
                 </Button>
             </Toolbar>
         </AppBar>

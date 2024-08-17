@@ -19,13 +19,16 @@ import {
 	DialogTitle,
 	DialogContent,
 	DialogContentText,
-	DialogActions,
+	DialogActions
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
 import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
 import { createTheme } from '@mui/material/styles';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
+
+import SmallLogo from '../../public/assets/SmallHomeScreenLogo.png';
 
 const theme = createTheme({
   palette: {
@@ -64,7 +67,7 @@ export default function Generate() {
 
 			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
 				<Toolbar>
-				<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}>Flasher.io</Typography>
+				<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
 				<SignedOut>
 					<Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
 					<Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
@@ -158,7 +161,18 @@ export default function Generate() {
 		
 
 		return (
-			<Container maxWidth="md">
+			<Container maxWidth="100vw">
+
+			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
+                <Toolbar>
+                <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                </Toolbar>
+            </AppBar>
+
+
 				 <Button href="/" 
 					sx={{
 						mt: 2, 
@@ -166,6 +180,7 @@ export default function Generate() {
 						alignContent: "center",
 						alignItems: "center",
 						textAlign: "center",
+						mr: 3,
 						backgroundColor: theme.palette.secondary.contrastText, 
 						color: theme.palette.primary.main, 
 						'&:hover': {
@@ -178,7 +193,8 @@ export default function Generate() {
 				<Button href="/flashcards" 
 					sx={{
 						mt: 2, 
-						position: "flex",
+						position: "absolute",
+						right: 25,
 						alignContent: "center",
 						alignItems: "center",
 						textAlign: "center",
@@ -191,6 +207,7 @@ export default function Generate() {
 					}}>
 					View Flashcard Sets
 				</Button>
+
 				<Box sx={{ my: 4 }}>
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
 						Generate Flashcards
@@ -276,7 +293,20 @@ export default function Generate() {
 							))}
 						</Grid>
 						<Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
-							<Button variant='container' color='primary' onClick={handleOpen}>Save</Button>
+							<Button 
+								variant='container' 
+								color='primary'
+								sx={{ 
+									mt: 2, 
+									my: 12,
+									backgroundColor: theme.palette.secondary.main, 
+									color: theme.palette.primary.contrastText,
+									'&:hover': {
+										backgroundColor: theme.palette.secondary.dark,
+										color: theme.palette.primary.contrastText,
+									}
+								}} 
+								onClick={handleOpen}>Save Flashcard Set</Button>
 						</Box>
 					</Box>
 				)}
