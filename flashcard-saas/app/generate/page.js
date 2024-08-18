@@ -40,6 +40,8 @@ import { FlipWords } from '@/components/ui/flip-words'
 import SmallLogo from '../../public/assets/SmallHomeScreenLogo.png';
 import { Flip } from 'gsap/all'
 
+import { Spotlight } from '@/components/ui/spotlight'
+
 
 const theme = createTheme({
   palette: {
@@ -309,6 +311,11 @@ const handleSubmit = async () => {
 						<FlipWords words={words} className='flip-words-text' /> 
 						 AI Flashcard Generation
 					</Typography>
+
+					<Spotlight
+						className="-top-40 left-0 md:left-60 md:-top-20"
+						fill="white"
+					/>
 
 					<Stack direction="row" mb={2} justifyContent={"space-between"} display="flex">
 						{

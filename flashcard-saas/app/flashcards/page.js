@@ -8,6 +8,8 @@ import { db } from "@/firebase"
 import { useRouter } from "next/navigation"
 import { Container, Grid, Card, CardActionArea, CardContent, Typography, Button } from "@mui/material"
 import { createTheme } from '@mui/material/styles';
+import { Spotlight } from "@/components/ui/spotlight"
+
 
 const theme = createTheme({
   palette: {
@@ -90,6 +92,11 @@ export default function Flashcards() {
             }}>
             Back Page
             </Button>
+
+            <Spotlight
+                className="-top-40 left-0 md:left-60 md:-top-20"
+                fill="white"
+            />
 
             <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}}>Saved Flashcard Sets</Typography>
 
