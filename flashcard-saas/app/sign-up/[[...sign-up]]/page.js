@@ -35,8 +35,9 @@ export default function SignUpPage(){
                   <Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/>
                 </Typography>
                 <Button color="inherit" sx={{color: theme.palette.primary.contrastText}}>
-                <Link href="/sign-in" passHref/>
+                <Link href="/sign-in" passHref>
                     Login
+                </Link>
                 </Button>
             </Toolbar>
         </AppBar>

@@ -5,16 +5,23 @@ import Logo from '../public/assets/logo.png';
 import SmallLogo from '../public/assets/SmallHomeScreenLogo.png';
 
 import React from 'react';
+import { useState } from 'react';
 import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, isSignedIn, user, useUser, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/material";
 import Head from "next/head";
 import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
 
 import { createTheme } from '@mui/material/styles';
+
+import { doc, setDoc } from 'firebase/firestore'
+import { db } from '@/firebase'
+
 import { CardStack } from '@/components/ui/card-stack';
 import { Vortex } from '@/components/ui/vortex';
+import zIndex from '@mui/material/styles/zIndex';
+
 
 const theme = createTheme({
   palette: {
@@ -34,6 +41,10 @@ const theme = createTheme({
 });
 
 export default function Home() {
+
+  const [membershipStatus, setMembershipStatus] = useState('Free');
+  const {isLoading, isSignedIn, user} = useUser()
+
   // Create the cards array with your data
   const cards = [
     { id: 1, name: "Masters of Business Administration Student", designation: "University of Georgia", content: "Flasher.io has been a game-changer for my study sessions. The intuitive AI-driven flashcards make learning complex topics much easier and more engaging. I love how I can customize the flashcards to fit my specific research needs." },
@@ -42,12 +53,14 @@ export default function Home() {
     // Add more cards as needed
   ];
 
+
   const handleSubmit = async () => {
     const checkoutSession = await fetch("/api/checkout_session", {
       method: "POST",
       headers: {
         origin: 'http://localhost:3000',
       },
+      body: JSON.stringify({userId: user.id}),
     });
 
   const checkout_session = await checkoutSession.json();
@@ -67,6 +80,21 @@ export default function Home() {
   }
   }
 
+  const handleProceed = async () => {
+    if (!isSignedIn) {
+        alert("Please sign in to continue.");
+        return;
+    }
+
+    const userDocRef = doc(db, 'users', user.id);
+    
+    await setDoc(userDocRef, { 
+        membershipStatus: membershipStatus 
+    }, { merge: true });
+
+   // router.push('/next-page');  // Redirect to the next page
+};
+
   return (
     <Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
       <Head maxWidth="100vw">
@@ -74,15 +102,17 @@ export default function Home() {
         <meta name = "description" content = "Create Flashcard from your text" />
       </Head>
 
+      <Vortex />
+
       <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
           <SignedOut>
-            <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
-            <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
+            <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light,}} style={{zIndex: 10000}}> Login</Button>
+            <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}} style={{zIndex: 10000}}> Sign Up</Button>
           </SignedOut>
-          <SignedIn>
-            <UserButton />
+          <SignedIn style={{zIndex: 10000}}>
+            <UserButton style={{zIndex: 10000}}/>
           </SignedIn>
         </Toolbar>
       </AppBar>
@@ -103,12 +133,13 @@ export default function Home() {
         <Typography variant="h6" gutterBottom fontSize={14}>
           {' '}
           Make AI Flashcards from your custom input
-          <Vortex />
         </Typography>
+
 
         <Button 
         variant="contained" 
         color = "primary" 
+        onClick={handleProceed}
         sx = {{
           my: 2,
           mt: 2, 

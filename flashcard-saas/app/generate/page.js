@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { use, useState } from 'react'
+import { use, useState, useEffect } from 'react'
 import {
   Container,
   TextField,
@@ -20,18 +20,26 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogActions,
-	CircularProgress,
+
+	Stack,
+	// CircularProgress
+
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
-import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
+import { doc, collection, setDoc, getDoc, writeBatch, memoryEagerGarbageCollector } from 'firebase/firestore'
 import { createTheme } from '@mui/material/styles';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
+import CircularProgress from '@mui/material/CircularProgress';
+
+
 import Image from "next/image";
 import { FlipWords } from '@/components/ui/flip-words'
 
 import SmallLogo from '../../public/assets/SmallHomeScreenLogo.png';
 import { Flip } from 'gsap/all'
+
 
 const theme = createTheme({
   palette: {
@@ -57,50 +65,113 @@ export default function Generate() {
   const [flashcards, setFlashcards] = useState([])
   const [flipped, setFlipped] = useState([])
   const [text, setText] = useState('')
+  const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 9})
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [membership, setMembership] = useState("Free")
   const router = useRouter();
+
+  const [openAdd, setOpenAdd] = useState(false)
+  const [flashcardFront, setFlashcardFront] = useState("")
+  const [flashcardBack, setFlashcardBack] = useState("")
+
+
+  useEffect (() => {
+	if (!user?.id) {
+		return; // Exit early if user.id is not available
+	}
+
+	const checkMembership = async () => {
+		const userDocRef = doc(collection(db, "users"), user.id);
+		const docSnap = await getDoc(userDocRef);
+		setMembership(docSnap.data().membershipStatus);
+		console.log("Membership Status: ", membership);
+	}
+	
+	checkMembership();
+  }, [user, membership]);
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
-    return <Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
+    return (
+	<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
 		<CircularProgress />
 		Loading...
-	</Typography>;
-}
-
-if (!isSignedIn) {
-    return(
-		<Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
-
-			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
-				<Toolbar>
-				<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
-				<SignedOut>
-					<Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
-					<Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
-				</SignedOut>
-				<SignedIn>
-					<UserButton />
-				</SignedIn>
-				</Toolbar> 
-			</AppBar>
-		<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
-			You must be signed in to generate flashcards.
-		</Typography>
-		</Container>
+	</Typography>
 	);
+	}
+
+	if (!isSignedIn) {
+		return(
+			<Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
+
+				<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
+					<Toolbar>
+					<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
+					<SignedOut>
+						<Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
+						<Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
+					</SignedOut>
+					<SignedIn>
+						<UserButton />
+					</SignedIn>
+					</Toolbar> 
+				</AppBar>
+			<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
+				You must be signed in to generate flashcards.
+			</Typography>
+			</Container>
+		);
+	}
+
+
+
+  
+
+  const updateTopic = (newTopic) =>
+	{
+		setCardDescription((prevState) => ({
+			...prevState,
+			topic: newTopic
+		}))
+	}
+
+  const updateNum = (newNum) =>
+  {
+	setCardDescription((prevState) => ({
+		...prevState,
+		cardNum: newNum
+	}))
+  }
+
+  const removeFlashcard = (indexToRemove) => {
+	const updatedList = flashcards.filter((item, index) => index !== indexToRemove)
+	setFlashcards(updatedList);
 }
+
+  const addFlashcard = (newFront, newBack) => {
+	setFlashcards((prevState) => [
+		...prevState,
+		{front: newFront, back: newBack},
+	])
+  }
+
 
 const handleSubmit = async () => {
+
     // We'll implement the API call here
 
 		fetch ('api/generate', {
         method: 'POST',
-        body: text,
+		headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(cardDescription),
         })
         .then((res) => res.json())
         .then((data) => setFlashcards(data))
+		.finally(() => {
+			setLoading(false);
+		});
 	}
     
 
@@ -119,9 +190,22 @@ const handleSubmit = async () => {
 			setOpen(false)
 		}
 
+
+		const handleAddOpen = () => {
+			setOpenAdd(true)
+		}
+
+		const handleAddClose = () => {
+			setOpenAdd(false)
+		}
+
+
+
+
 		const handleRefresh = () => {
 			setFlashcards([])
 		}
+
 
 		const saveFlashcards = async () => {
 			if (!isSignedIn || isLoading) {
@@ -171,7 +255,6 @@ const handleSubmit = async () => {
 		}
 
 		
-
 		return (
 			<Container maxWidth="100vw" >
 
@@ -227,9 +310,22 @@ const handleSubmit = async () => {
 						 AI Flashcard Generation
 					</Typography>
 
+					<Stack direction="row" mb={2} justifyContent={"space-between"} display="flex">
+						{
+							membership === "Pro" && (<><TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
+							</>)
+						}
+						{
+							(loading ? <Box><CircularProgress/></Box> : null)
+						}
+						
+					</Stack>
+
+
+
 					<TextField
-						value={text}
-						onChange={(e) => setText(e.target.value)}
+						value={cardDescription.topic}
+						onChange={(e) => updateTopic(e.target.value)}
 						label="Enter text"
 						fullWidth
 						multiline
@@ -248,7 +344,7 @@ const handleSubmit = async () => {
 							color: theme.palette.primary.main,
 							},
 						}}
-						onClick={handleSubmit}
+						onClick={() => {handleSubmit(); setLoading(true)}}
 						fullWidth
 					>
 						{' '}
@@ -302,11 +398,28 @@ const handleSubmit = async () => {
 												</Box>
 											</CardContent>
 										</CardActionArea>
+										{membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>}
 									</Card>
 								</Grid>
 							))}
 						</Grid>
 						<Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
+							{membership === "Pro" && <Button 
+								onClick={handleAddOpen}
+								variant='container' 
+								color='primary'
+								sx={{ 
+									mt: 2, 
+									my: 12,
+									mr: 2,
+									backgroundColor: theme.palette.secondary.main, 
+									color: theme.palette.primary.contrastText,
+									'&:hover': {
+										backgroundColor: theme.palette.secondary.dark,
+										color: theme.palette.primary.contrastText,
+									}
+								}} >Add Flashcard</Button>}
+							
 							<Button 
 								variant='container' 
 								color='primary'
@@ -362,10 +475,45 @@ const handleSubmit = async () => {
 						<Button onClick={saveFlashcards} color="primary">Save</Button>
 					</DialogActions>
 				</Dialog>
+
+				<Dialog open={openAdd} onClose={handleAddClose} fullWidth maxWidth="sm">
+					<DialogTitle>Add Flashcard</DialogTitle>
+					<DialogContent>
+						<DialogContentText>
+							Flashcard Front
+						</DialogContentText>
+						<TextField
+						autoFocus
+						margin = 'dense'
+						label = 'Title'
+						type = 'text'
+						fullWidth
+						value={flashcardFront}
+						onChange={(e) => setFlashcardFront(e.target.value)}
+						variant='outlined'
+						mb={50}
+						/>
+						<DialogContentText>
+							Flashcard Backs
+						</DialogContentText>
+						<TextField
+						multiline
+						rows={6}
+						autoFocus
+						margin = 'dense'
+						label = 'Description'
+						type = 'text'
+						fullWidth
+						value={flashcardBack}
+						onChange={(e) => setFlashcardBack(e.target.value)}
+						variant='outlined'
+						/>
+					</DialogContent>
+					<DialogActions>
+						<Button onClick={handleAddClose}>Cancel</Button>
+						<Button onClick={() => {addFlashcard(flashcardFront, flashcardBack); handleAddClose()}} color="primary">Add</Button>
+					</DialogActions>
+				</Dialog>
 			</Container>
 		)
 }
-
-
-
-	
