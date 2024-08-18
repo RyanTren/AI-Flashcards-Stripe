@@ -20,14 +20,25 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogActions,
+
 	Stack,
+	// CircularProgress
+
 } from '@mui/material'
 import { useUser } from '@clerk/nextjs'
 import { db } from '@/firebase'
-import { doc, collection, setDoc, getDoc, writeBatch } from 'firebase/firestore'
+import { doc, collection, setDoc, getDoc, writeBatch, memoryEagerGarbageCollector } from 'firebase/firestore'
 import { createTheme } from '@mui/material/styles';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 import CircularProgress from '@mui/material/CircularProgress';
+
+
+import Image from "next/image";
+import { FlipWords } from '@/components/ui/flip-words'
+
+import SmallLogo from '../../public/assets/SmallHomeScreenLogo.png';
+import { Flip } from 'gsap/all'
 
 
 const theme = createTheme({
@@ -46,6 +57,8 @@ const theme = createTheme({
     },
   },
 });
+
+const words = ["Better ", "Fast ", "Detailed ", "Simple "];
 
 export default function Generate() {
   const {isLoading, isSignedIn, user} = useUser()
@@ -77,35 +90,41 @@ export default function Generate() {
 	}
 	
 	checkMembership();
-  }, [user])
+  }, [user, membership]);
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
-    return <Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">Loading...</Typography>;
-  }
-
-  if (!isSignedIn) {
-    return(
-		<Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
-
-			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
-				<Toolbar>
-				<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}>Flasher.io</Typography>
-				<SignedOut>
-					<Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
-					<Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
-				</SignedOut>
-				<SignedIn>
-					<UserButton />
-				</SignedIn>
-				</Toolbar> 
-			</AppBar>
-		<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
-			You must be signed in to generate flashcards.
-		</Typography>
-		</Container>
+    return (
+	<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
+		<CircularProgress />
+		Loading...
+	</Typography>
 	);
-  }
+	}
+
+	if (!isSignedIn) {
+		return(
+			<Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
+
+				<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText}}>
+					<Toolbar>
+					<Typography variant="h6" style={{flexGrow: 1}} sx={{color: theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
+					<SignedOut>
+						<Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
+						<Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
+					</SignedOut>
+					<SignedIn>
+						<UserButton />
+					</SignedIn>
+					</Toolbar> 
+				</AppBar>
+			<Typography variant="h5" my={50} sx={{position: "relative", textAlign: "center", alignContent: "center", alignItems: "center"}} color="white">
+				You must be signed in to generate flashcards.
+			</Typography>
+			</Container>
+		);
+	}
+
 
 
   
@@ -138,7 +157,9 @@ export default function Generate() {
 	])
   }
 
-  	const handleSubmit = async () => {
+
+const handleSubmit = async () => {
+
     // We'll implement the API call here
 
 		fetch ('api/generate', {
@@ -169,6 +190,7 @@ export default function Generate() {
 			setOpen(false)
 		}
 
+
 		const handleAddOpen = () => {
 			setOpenAdd(true)
 		}
@@ -177,6 +199,12 @@ export default function Generate() {
 			setOpenAdd(false)
 		}
 
+
+
+
+		const handleRefresh = () => {
+			setFlashcards([])
+		}
 
 
 		const saveFlashcards = async () => {
@@ -228,8 +256,19 @@ export default function Generate() {
 
 		
 		return (
-			<Container maxWidth="md">
-				 <Button href="/" 
+			<Container maxWidth="100vw" >
+
+			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
+                <Toolbar>
+                <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                </Toolbar>
+            </AppBar>
+
+
+				<Button href="/" 
 					sx={{
 						mt: 2, 
 						position: "flex",
@@ -249,7 +288,8 @@ export default function Generate() {
 				<Button href="/flashcards" 
 					sx={{
 						mt: 2, 
-						position: "flex",
+						position: "absolute",
+						right: 25,
 						alignContent: "center",
 						alignItems: "center",
 						textAlign: "center",
@@ -263,10 +303,13 @@ export default function Generate() {
 					View Flashcard Sets
 				</Button>
 
+
 				<Box sx={{ my: 4 }}>
 					<Typography variant="h3" component="h1" my = {10} gutterBottom sx={{color: theme.palette.primary.contrastText, textAlign: "center", position: "relative"}}>
-						Generate Flashcards
+						<FlipWords words={words} className='flip-words-text' /> 
+						 AI Flashcard Generation
 					</Typography>
+
 					<Stack direction="row" mb={2} justifyContent={"space-between"} display="flex">
 						{
 							membership === "Pro" && (<><TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
@@ -277,6 +320,9 @@ export default function Generate() {
 						}
 						
 					</Stack>
+
+
+
 					<TextField
 						value={cardDescription.topic}
 						onChange={(e) => updateTopic(e.target.value)}
@@ -285,8 +331,7 @@ export default function Generate() {
 						multiline
 						rows={6}
 						variant="outlined"
-						sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}
-						
+						sx={{ mb: 2, backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}	
 					/>
 					<Button
 						variant="contained"
@@ -353,7 +398,7 @@ export default function Generate() {
 												</Box>
 											</CardContent>
 										</CardActionArea>
-										{membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>}
+										{membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><Image src="removeIcon.png" alt="remove" height="36px" width="36px"/></Button>}
 									</Card>
 								</Grid>
 							))}
@@ -378,7 +423,8 @@ export default function Generate() {
 							<Button 
 								variant='container' 
 								color='primary'
-								sx={{ 
+								sx={{
+									margin: 2, 
 									mt: 2, 
 									my: 12,
 									backgroundColor: theme.palette.secondary.main, 
@@ -389,6 +435,20 @@ export default function Generate() {
 									}
 								}} 
 								onClick={handleOpen}>Save Flashcard Set</Button>
+							<Button 
+								variant='container' 
+								color='primary'
+								sx={{ 
+									mt: 2, 
+									my: 12,
+									backgroundColor: theme.palette.secondary.main, 
+									color: theme.palette.primary.contrastText,
+									'&:hover': {
+										backgroundColor: theme.palette.secondary.dark,
+										color: theme.palette.primary.contrastText,
+									}
+								}} 
+								onClick={() => { handleRefresh(); handleSubmit(); }}> Refresh Flashcard Set</Button>
 						</Box>
 					</Box>
 				)}
@@ -457,7 +517,3 @@ export default function Generate() {
 			</Container>
 		)
 }
-
-
-
-	
