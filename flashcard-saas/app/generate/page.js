@@ -260,6 +260,11 @@ const handleSubmit = async () => {
 		return (
 			<Container maxWidth="100vw" >
 
+			<Spotlight
+				className="-top-40 left-0 md:left-60 md:-top-20"
+				fill="white"
+			/>
+
 			<AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
                 <Toolbar>
                 <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
@@ -312,10 +317,6 @@ const handleSubmit = async () => {
 						 AI Flashcard Generation
 					</Typography>
 
-					<Spotlight
-						className="-top-40 left-0 md:left-60 md:-top-20"
-						fill="white"
-					/>
 
 					<Stack direction="row" mb={2} justifyContent={"space-between"} display="flex">
 						{
