@@ -23,13 +23,13 @@ export const Vortex = (props: VortexProps) => {
   const particleCount = props.particleCount || 200;
   const particlePropCount = 9;
   const particlePropsLength = particleCount * particlePropCount;
-  const rangeY = props.rangeY || 250;
+  const rangeY = props.rangeY || 3250;
   const baseTTL = 50;
   const rangeTTL = 150;
   const baseSpeed = props.baseSpeed || 0.00;
   const rangeSpeed = props.rangeSpeed || 0.05;
-  const baseRadius = props.baseRadius || 0.85;
-  const rangeRadius = props.rangeRadius || 1.7;
+  const baseRadius = props.baseRadius || 1.00;
+  const rangeRadius = props.rangeRadius || 1.70;
   const baseHue = props.baseHue || 221;
   const rangeHue = 50;
   const noiseSteps = 3;

@@ -20,6 +20,7 @@ import { db } from '@/firebase'
 
 import { CardStack } from '@/components/ui/card-stack';
 import { Vortex } from '@/components/ui/vortex';
+import zIndex from '@mui/material/styles/zIndex';
 
 
 const theme = createTheme({
@@ -101,15 +102,17 @@ export default function Home() {
         <meta name = "description" content = "Create Flashcard from your text" />
       </Head>
 
+      <Vortex />
+
       <AppBar position="static" sx={{backgroundColor: theme.palette.primary.dark, color:theme.palette.primary.contrastText, borderRadius: 2}}>
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}} sx={{color:theme.palette.primary.contrastText}}><Image src={SmallLogo} alt="Flasher.io Logo" width={25} sx={{textAlign: "center"}}/></Typography>
           <SignedOut>
-            <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light}}> Login</Button>
-            <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}}> Sign Up</Button>
+            <Button color="inherit" href="sign-in" sx={{color: theme.palette.primary.light,}} style={{zIndex: 10000}}> Login</Button>
+            <Button color="inherit" href="sign-up" sx={{color: theme.palette.primary.light}} style={{zIndex: 10000}}> Sign Up</Button>
           </SignedOut>
-          <SignedIn>
-            <UserButton />
+          <SignedIn style={{zIndex: 10000}}>
+            <UserButton style={{zIndex: 10000}}/>
           </SignedIn>
         </Toolbar>
       </AppBar>
@@ -130,8 +133,8 @@ export default function Home() {
         <Typography variant="h6" gutterBottom fontSize={14}>
           {' '}
           Make AI Flashcards from your custom input
-          <Vortex />
         </Typography>
+
 
         <Button 
         variant="contained" 
