@@ -6,10 +6,9 @@ import SmallLogo from '../public/assets/SmallHomeScreenLogo.png';
 
 import React from 'react';
 import { useState } from 'react';
-import { useUser } from '@clerk/nextjs'
 import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, isSignedIn, user, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, isSignedIn, user, useUser, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/material";
 import Head from "next/head";
 import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";

@@ -398,7 +398,7 @@ const handleSubmit = async () => {
 												</Box>
 											</CardContent>
 										</CardActionArea>
-										{membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><Image src="removeIcon.png" alt="remove" height="36px" width="36px"/></Button>}
+										{membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>}
 									</Card>
 								</Grid>
 							))}
