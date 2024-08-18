@@ -4,13 +4,17 @@ import './globals.css';
 import Logo from '../public/assets/logo.png';
 
 import React from 'react';
+import { useState } from 'react';
+import { useUser } from '@clerk/nextjs'
 import Image from "next/image";
 import getStripe from "@/utils/get-stripe";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, isSignedIn, user, UserButton } from "@clerk/nextjs";
 import { Box, AppBar, Button, Container, Toolbar, Typography, Grid } from "@mui/material";
 import Head from "next/head";
 import { checkCustomRoutes } from "next/dist/lib/load-custom-routes";
 import { createTheme } from '@mui/material/styles';
+import { doc, setDoc } from 'firebase/firestore'
+import { db } from '@/firebase'
 
 const theme = createTheme({
   palette: {
@@ -30,12 +34,16 @@ const theme = createTheme({
 });
 
 export default function Home() {
+  const [membershipStatus, setMembershipStatus] = useState('Free');
+  const {isLoading, isSignedIn, user} = useUser()
+
   const handleSubmit = async () => {
     const checkoutSession = await fetch("/api/checkout_session", {
       method: "POST",
       headers: {
         origin: 'http://localhost:3000',
       },
+      body: JSON.stringify({userId: user.id}),
     });
 
   const checkout_session = await checkoutSession.json();
@@ -54,6 +62,21 @@ export default function Home() {
     console.warn(error.message);
   }
   }
+
+  const handleProceed = async () => {
+    if (!isSignedIn) {
+        alert("Please sign in to continue.");
+        return;
+    }
+
+    const userDocRef = doc(db, 'users', user.id);
+    
+    await setDoc(userDocRef, { 
+        membershipStatus: membershipStatus 
+    }, { merge: true });
+
+   // router.push('/next-page');  // Redirect to the next page
+};
 
   return (
     <Container maxWidth="100vw" sx={{backgroundColor: theme.palette.primary.main, color:theme.palette.primary.contrastText}}>
@@ -96,6 +119,7 @@ export default function Home() {
         <Button 
         variant="contained" 
         color = "primary" 
+        onClick={handleProceed}
         sx = {{
           my: 2,
           mt: 2, 

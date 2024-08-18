@@ -2,7 +2,7 @@
 
 import { useUser } from "@clerk/nextjs"
 import { useEffect, useState } from "react"
-import {collection, doc, getDocs, setDoc, deleteDoc, addDoc} from "firebase/firestore"
+import {collection, doc, getDocs, setDoc, deleteDoc, addDoc, getDoc} from "firebase/firestore"
 import { db } from "@/firebase"
 
 import { useSearchParams } from "next/navigation"
@@ -37,6 +37,8 @@ export default function Flashcard() {
     const [flashcardFront, setFlashcardFront] = useState()
     const [flashcardBack, setFlashcardBack] = useState()
 
+    const [membership, setMembership] = useState("Free")
+
     const searchParams = useSearchParams()
     const search = searchParams.get('id')
 
@@ -56,6 +58,21 @@ export default function Flashcard() {
 
         getFlashcard()
     }, [user, search])
+
+    useEffect (() => {
+        if (!user?.id) {
+            return; // Exit early if user.id is not available
+        }
+    
+        const checkMembership = async () => {
+            const userDocRef = doc(collection(db, "users"), user.id);
+            const docSnap = await getDoc(userDocRef);
+            setMembership(docSnap.data().membershipStatus);
+            console.log("Membership Status: ", membership);
+        }
+        
+        checkMembership();
+      }, [user])
 
 
     const addFlashcard = async (newFront, newBack) => {
@@ -111,7 +128,8 @@ export default function Flashcard() {
             }}>
                 Back Page
             </Button>
-            <Button onClick={() => {handleOpen()}} 
+            
+            {membership === "Pro" && <Button onClick={() => {handleOpen()}} 
                 sx={{
                     mt: 2, 
                     position: "flex",
@@ -126,7 +144,7 @@ export default function Flashcard() {
                     },
                 }}>
                 Add Flashcard
-            </Button>
+            </Button>}
 
             <Typography variant="h2" component="h1" sx={{mt: 4, textAlign: "center", position: "relative"}} gutterBottom>Generated Flashcard Preview</Typography>
             <Grid container spacing={3} sx={{mt: 4}}>
@@ -172,7 +190,7 @@ export default function Flashcard() {
                                     </Box>
                                 </CardContent>
                             </CardActionArea>
-                            <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>
+                            {membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>}
                         </Card>
                     </Grid>
                 ))}
@@ -211,7 +229,7 @@ export default function Flashcard() {
 						/>
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={() => handleClose}>Cancel</Button>
+						<Button onClick={handleClose}>Cancel</Button>
 						<Button onClick={() => {addFlashcard(flashcardFront, flashcardBack); handleClose();}} color="primary">Add</Button>
 					</DialogActions>
 				</Dialog>

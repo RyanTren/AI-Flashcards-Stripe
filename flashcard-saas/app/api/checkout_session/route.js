@@ -30,6 +30,9 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
+    const body = await req.json()
+    const userId = body.userId // Extract user ID from the request body
+
     //checkout session creation here
     const params = {
         mode: 'subscription',
@@ -50,6 +53,9 @@ export async function POST(req) {
             quantity: 1,
           },
         ],
+        metadata: {
+          userId: userId, // Include user ID in the metadata
+        },
         success_url: `${req.headers.get(
           'origin',
         )}/result?session_id={CHECKOUT_SESSION_ID}`,

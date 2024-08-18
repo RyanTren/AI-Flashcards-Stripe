@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { use, useState } from 'react'
+import { use, useState, useEffect } from 'react'
 import {
   Container,
   TextField,
@@ -52,15 +52,32 @@ export default function Generate() {
   const [flashcards, setFlashcards] = useState([])
   const [flipped, setFlipped] = useState([])
   const [text, setText] = useState('')
-  const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 7})
+  const [cardDescription, setCardDescription] = useState({topic: "", cardNum: 9})
   const [name, setName] = useState('')
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [membership, setMembership] = useState("Free")
   const router = useRouter();
 
   const [openAdd, setOpenAdd] = useState(false)
   const [flashcardFront, setFlashcardFront] = useState("")
   const [flashcardBack, setFlashcardBack] = useState("")
+
+
+  useEffect (() => {
+	if (!user?.id) {
+		return; // Exit early if user.id is not available
+	}
+
+	const checkMembership = async () => {
+		const userDocRef = doc(collection(db, "users"), user.id);
+		const docSnap = await getDoc(userDocRef);
+		setMembership(docSnap.data().membershipStatus);
+		console.log("Membership Status: ", membership);
+	}
+	
+	checkMembership();
+  }, [user])
 
    // Handle cases where user is not signed in or still loading
 	if (isLoading) {
@@ -89,6 +106,9 @@ export default function Generate() {
 		</Container>
 	);
   }
+
+
+  
 
   const updateTopic = (newTopic) =>
 	{
@@ -207,7 +227,6 @@ export default function Generate() {
 		}
 
 		
-
 		return (
 			<Container maxWidth="md">
 				 <Button href="/" 
@@ -249,10 +268,14 @@ export default function Generate() {
 						Generate Flashcards
 					</Typography>
 					<Stack direction="row" mb={2} justifyContent={"space-between"} display="flex">
-						<TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
+						{
+							membership === "Pro" && (<><TextField type="number" inputProps={{ min: 1, max: 50 }} value = {cardDescription.cardNum} onChange={(e) => updateNum(e.target.value)} variant="outlined" label="# of Cards" sx={{backgroundColor: theme.palette.primary.contrastText, color: theme.palette.primary.contrastText, borderRadius: 2 }}/>
+							</>)
+						}
 						{
 							(loading ? <Box><CircularProgress/></Box> : null)
 						}
+						
 					</Stack>
 					<TextField
 						value={cardDescription.topic}
@@ -330,13 +353,13 @@ export default function Generate() {
 												</Box>
 											</CardContent>
 										</CardActionArea>
-										<Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>
+										{membership === "Pro" && <Button onClick={() => removeFlashcard(index)}><img src="removeIcon.png" height="36px" width="36px"/></Button>}
 									</Card>
 								</Grid>
 							))}
 						</Grid>
 						<Box sx={{mt: 4, display: 'flex', justifyContent: 'center'}}>
-							<Button 
+							{membership === "Pro" && <Button 
 								onClick={handleAddOpen}
 								variant='container' 
 								color='primary'
@@ -350,7 +373,8 @@ export default function Generate() {
 										backgroundColor: theme.palette.secondary.dark,
 										color: theme.palette.primary.contrastText,
 									}
-								}} >Add Flashcard</Button>
+								}} >Add Flashcard</Button>}
+							
 							<Button 
 								variant='container' 
 								color='primary'
