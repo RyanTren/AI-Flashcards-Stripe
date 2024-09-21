@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.7",
     "@stripe/stripe-js": "^4.2.0",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
